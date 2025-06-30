@@ -1,0 +1,29 @@
+# Arquivos do FFmpeg
+scripts/ffmpeg.exe
+scripts/ffprobe.exe
+
+# Arquivos de configuração local
+config/config.php
+
+# Arquivos temporários
+temp_gifs/
+*.tmp
+*.temp
+
+# Logs
+*.log
+npm-debug.log*
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de IDE/Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Arquivos de ambiente
+.env
+.env.local 

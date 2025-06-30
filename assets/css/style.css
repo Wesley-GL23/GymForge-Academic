@@ -1,0 +1,157 @@
+/* Variáveis de Cores */
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --dark-color: #343a40;
+    --light-color: #f8f9fa;
+}
+
+/* Estilos Gerais */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* Navbar */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-brand img {
+    margin-right: 10px;
+}
+
+/* Cards */
+.card {
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Botões */
+.btn {
+    border-radius: 5px;
+    padding: 8px 20px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Forms */
+.form-control {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}
+
+/* Exercícios Grid */
+.exercicio-card {
+    height: 100%;
+}
+
+.exercicio-card .gif-container {
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.exercicio-card .gif-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+/* Treinos */
+.treino-card {
+    margin-bottom: 20px;
+}
+
+.treino-exercicio {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: var(--light-color);
+    border-radius: 5px;
+}
+
+/* Dashboard */
+.dashboard-stat {
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.dashboard-stat i {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+/* Perfil */
+.profile-header {
+    background-color: var(--dark-color);
+    color: white;
+    padding: 30px 0;
+    margin-bottom: 30px;
+}
+
+/* Notificações */
+.notification-badge {
+    position: relative;
+}
+
+.notification-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--danger-color);
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.75rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .dashboard-stat {
+        margin-bottom: 15px;
+    }
+
+    .profile-header {
+        padding: 20px 0;
+    }
+}
+
+/* Animações */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+} 
