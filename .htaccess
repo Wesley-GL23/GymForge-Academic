@@ -1,0 +1,23 @@
+RewriteEngine On
+RewriteBase /
+
+# Redirecionar para HTTPS
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
+
+# Se o arquivo/diretório não existe, redirecionar para index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L]
+
+# Permitir acesso a arquivos estáticos
+<FilesMatch "\.(jpg|jpeg|png|gif|ico|css|js|woff|woff2|ttf|svg|eot|webm|mp4)$">
+    Allow from all
+</FilesMatch>
+
+# Habilitar CORS para vídeos
+<IfModule mod_headers.c>
+    <FilesMatch "\.(webm|mp4)$">
+        Header set Access-Control-Allow-Origin "*"
+    </FilesMatch>
+</IfModule> 

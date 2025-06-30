@@ -1,0 +1,16 @@
+# Existing content
+// ... existing code ...
+
+# FFmpeg binaries
+scripts/ffmpeg.exe
+scripts/ffprobe.exe
+
+# Arquivos temporários
+temp_gifs/
+*.tmp
+
+# Arquivos de configuração local
+config/config.php
+
+# Logs
+*.log 
