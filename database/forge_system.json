@@ -1,0 +1,233 @@
+{
+    "ranks": {
+        "novice_forger": {
+            "name": "Aprendiz de Forja",
+            "min_level": 1,
+            "max_level": 10,
+            "badge_color": "#CD7F32",
+            "requirements": {
+                "total_workouts": 5,
+                "total_exercises": 20
+            }
+        },
+        "apprentice_forger": {
+            "name": "Ferreiro Iniciante",
+            "min_level": 11,
+            "max_level": 20,
+            "badge_color": "#C0C0C0",
+            "requirements": {
+                "total_workouts": 20,
+                "total_exercises": 100,
+                "muscle_groups_above_30": 3
+            }
+        },
+        "journeyman_forger": {
+            "name": "Ferreiro Experiente",
+            "min_level": 21,
+            "max_level": 30,
+            "badge_color": "#FFD700",
+            "requirements": {
+                "total_workouts": 50,
+                "total_exercises": 300,
+                "muscle_groups_above_50": 5
+            }
+        },
+        "master_forger": {
+            "name": "Mestre Ferreiro",
+            "min_level": 31,
+            "max_level": 40,
+            "badge_color": "#B9F2FF",
+            "requirements": {
+                "total_workouts": 100,
+                "total_exercises": 600,
+                "muscle_groups_above_70": 7
+            }
+        },
+        "grandmaster_forger": {
+            "name": "Grão-Mestre Ferreiro",
+            "min_level": 41,
+            "max_level": 50,
+            "badge_color": "#FF4D00",
+            "requirements": {
+                "total_workouts": 200,
+                "total_exercises": 1200,
+                "muscle_groups_above_85": 8
+            }
+        },
+        "legendary_forger": {
+            "name": "Forjador Lendário",
+            "min_level": 51,
+            "max_level": 99,
+            "badge_color": "#FF0000",
+            "aura_effect": true,
+            "requirements": {
+                "total_workouts": 365,
+                "total_exercises": 2000,
+                "muscle_groups_above_95": 10
+            }
+        }
+    },
+    "attributes": {
+        "strength": {
+            "name": "Força",
+            "icon": "dumbbell",
+            "description": "Aumenta o poder de seus golpes na forja",
+            "affects": ["damage_bonus", "lifting_capacity"]
+        },
+        "endurance": {
+            "name": "Resistência",
+            "icon": "heart",
+            "description": "Aumenta o tempo que pode forjar sem cansar",
+            "affects": ["stamina", "recovery_rate"]
+        },
+        "technique": {
+            "name": "Técnica",
+            "icon": "hammer",
+            "description": "Melhora a qualidade de suas forjarias",
+            "affects": ["critical_chance", "quality_bonus"]
+        },
+        "wisdom": {
+            "name": "Sabedoria",
+            "icon": "brain",
+            "description": "Aumenta a experiência ganha e descobertas",
+            "affects": ["xp_bonus", "discovery_chance"]
+        }
+    },
+    "muscle_tempering": {
+        "chest": {
+            "name": "Peitoral",
+            "max_level": 100,
+            "visual_stages": [
+                {
+                    "level": 0,
+                    "description": "Bronze Frio",
+                    "color": "#CD7F32",
+                    "glow": false
+                },
+                {
+                    "level": 25,
+                    "description": "Bronze Aquecido",
+                    "color": "#FF8C00",
+                    "glow": true
+                },
+                {
+                    "level": 50,
+                    "description": "Aço Temperado",
+                    "color": "#4682B4",
+                    "glow": true,
+                    "particle_effect": "sparks"
+                },
+                {
+                    "level": 75,
+                    "description": "Aço Místico",
+                    "color": "#00BFFF",
+                    "glow": true,
+                    "particle_effect": "energy"
+                },
+                {
+                    "level": 100,
+                    "description": "Adamantium",
+                    "color": "#FF4D00",
+                    "glow": true,
+                    "particle_effect": "flames",
+                    "aura": true
+                }
+            ]
+        },
+        "back": {
+            "name": "Costas",
+            "max_level": 100,
+            "visual_stages": [
+                {
+                    "level": 0,
+                    "description": "Bronze Frio",
+                    "color": "#CD7F32",
+                    "glow": false
+                },
+                {
+                    "level": 25,
+                    "description": "Bronze Aquecido",
+                    "color": "#FF8C00",
+                    "glow": true
+                },
+                {
+                    "level": 50,
+                    "description": "Aço Temperado",
+                    "color": "#4682B4",
+                    "glow": true,
+                    "particle_effect": "sparks"
+                },
+                {
+                    "level": 75,
+                    "description": "Aço Místico",
+                    "color": "#00BFFF",
+                    "glow": true,
+                    "particle_effect": "energy"
+                },
+                {
+                    "level": 100,
+                    "description": "Adamantium",
+                    "color": "#FF4D00",
+                    "glow": true,
+                    "particle_effect": "flames",
+                    "aura": true
+                }
+            ]
+        }
+    },
+    "special_achievements": {
+        "thunder_arms": {
+            "name": "Braços de Trovão",
+            "description": "Alcance nível 100 em bíceps e tríceps",
+            "icon": "bolt",
+            "particle_effect": "lightning",
+            "reward": {
+                "title": "Forjador do Trovão",
+                "aura_effect": "electric"
+            }
+        },
+        "iron_core": {
+            "name": "Núcleo de Ferro",
+            "description": "Complete 1000 exercícios de core",
+            "icon": "fire",
+            "particle_effect": "core_energy",
+            "reward": {
+                "title": "Guardião do Núcleo",
+                "aura_effect": "iron_glow"
+            }
+        },
+        "legendary_legs": {
+            "name": "Pernas Lendárias",
+            "description": "Alcance nível 100 em todos os músculos das pernas",
+            "icon": "running",
+            "particle_effect": "ground_crack",
+            "reward": {
+                "title": "Titã das Pernas",
+                "aura_effect": "ground_shake"
+            }
+        }
+    },
+    "forge_events": {
+        "daily_forge": {
+            "name": "Forja Diária",
+            "description": "Desafio diário com exercícios específicos",
+            "duration": "24h",
+            "rewards": {
+                "xp_bonus": 50,
+                "tempering_bonus": 25,
+                "special_material_chance": 10
+            }
+        },
+        "weekly_raid": {
+            "name": "Invasão Semanal",
+            "description": "Desafio em grupo para forjar itens lendários",
+            "duration": "168h",
+            "min_participants": 5,
+            "rewards": {
+                "legendary_material_chance": 25,
+                "guild_xp_bonus": 100,
+                "special_title_chance": 15
+            }
+        }
+    }
+} 

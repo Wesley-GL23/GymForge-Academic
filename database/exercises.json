@@ -1,0 +1,134 @@
+{
+    "categories": {
+        "strength": {
+            "name": "Força",
+            "icon": "dumbbell",
+            "description": "Exercícios para ganho de força e massa muscular"
+        },
+        "cardio": {
+            "name": "Cardio",
+            "icon": "heart",
+            "description": "Exercícios para melhorar condicionamento e queima de gordura"
+        },
+        "flexibility": {
+            "name": "Flexibilidade",
+            "icon": "child",
+            "description": "Exercícios para melhorar amplitude de movimento"
+        },
+        "core": {
+            "name": "Core",
+            "icon": "fire",
+            "description": "Exercícios para fortalecer o núcleo do corpo"
+        }
+    },
+    "difficulty_levels": {
+        "beginner": {
+            "name": "Iniciante",
+            "color": "#4CAF50"
+        },
+        "intermediate": {
+            "name": "Intermediário",
+            "color": "#FFC107"
+        },
+        "advanced": {
+            "name": "Avançado",
+            "color": "#F44336"
+        }
+    },
+    "exercises": [
+        {
+            "id": "burpee",
+            "name": "Burpee",
+            "video": "148196-793717922_tiny.mp4",
+            "category": "cardio",
+            "difficulty": "intermediate",
+            "muscles": ["core", "legs", "chest", "shoulders"],
+            "calories_per_minute": 15,
+            "description": "Exercício completo que trabalha todo o corpo e melhora o condicionamento",
+            "instructions": [
+                "Comece em pé",
+                "Agache e coloque as mãos no chão",
+                "Chute os pés para trás, ficando em posição de flexão",
+                "Faça uma flexão",
+                "Salte os pés de volta para as mãos",
+                "Salte para cima com os braços estendidos"
+            ]
+        },
+        {
+            "id": "mountain_climber",
+            "name": "Mountain Climber",
+            "video": "148197-793717924_tiny.mp4",
+            "category": "cardio",
+            "difficulty": "intermediate",
+            "muscles": ["core", "shoulders", "legs"],
+            "calories_per_minute": 12,
+            "description": "Excelente exercício para trabalhar o core e melhorar resistência",
+            "instructions": [
+                "Comece em posição de prancha",
+                "Alterne os joelhos em direção ao peito",
+                "Mantenha as costas retas",
+                "Mantenha um ritmo constante"
+            ]
+        },
+        {
+            "id": "push_up",
+            "name": "Flexão de Braço",
+            "video": "148201-793717934_tiny.mp4",
+            "category": "strength",
+            "difficulty": "beginner",
+            "muscles": ["chest", "triceps", "shoulders", "core"],
+            "calories_per_minute": 8,
+            "description": "Clássico exercício para peitoral e tríceps",
+            "instructions": [
+                "Mãos na largura dos ombros",
+                "Mantenha o corpo alinhado",
+                "Desça o peito próximo ao solo",
+                "Empurre de volta à posição inicial"
+            ]
+        },
+        {
+            "id": "jumping_jack",
+            "name": "Jumping Jack",
+            "video": "148211-793717955_tiny.mp4",
+            "category": "cardio",
+            "difficulty": "beginner",
+            "muscles": ["full_body"],
+            "calories_per_minute": 10,
+            "description": "Exercício aeróbico que trabalha todo o corpo",
+            "instructions": [
+                "Comece em pé com pés juntos",
+                "Salte abrindo pernas e braços",
+                "Volte à posição inicial",
+                "Mantenha um ritmo constante"
+            ]
+        },
+        {
+            "id": "plank",
+            "name": "Prancha",
+            "video": "148212-793717957_tiny.mp4",
+            "category": "core",
+            "difficulty": "beginner",
+            "muscles": ["core", "shoulders", "back"],
+            "calories_per_minute": 5,
+            "description": "Exercício isométrico excelente para fortalecer o core",
+            "instructions": [
+                "Apoie antebraços no chão",
+                "Mantenha o corpo reto",
+                "Contraia o abdômen",
+                "Mantenha a posição"
+            ]
+        }
+    ],
+    "muscle_groups": {
+        "chest": "Peitoral",
+        "back": "Costas",
+        "shoulders": "Ombros",
+        "biceps": "Bíceps",
+        "triceps": "Tríceps",
+        "core": "Core",
+        "abs": "Abdômen",
+        "legs": "Pernas",
+        "glutes": "Glúteos",
+        "full_body": "Corpo Inteiro"
+    }
+} 

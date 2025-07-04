@@ -4,13 +4,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h5>GymForge-PHP</h5>
+                    <h5>GymForge</h5>
                     <p class="mb-0">Sistema de Gerenciamento de Treinos</p>
                     <small class="text-muted">Versão Acadêmica - 2025</small>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <p class="mb-0">Desenvolvido com <i class="fas fa-heart text-danger"></i> por</p>
-                    <small class="text-muted">Seu Nome - Faculdade</small>
                 </div>
             </div>
         </div>

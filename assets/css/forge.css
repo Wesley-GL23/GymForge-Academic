@@ -1,0 +1,663 @@
+/* Estilos Base da Forja */
+:root {
+    --forge-primary: #FF4D00;
+    --forge-secondary: #FFD700;
+    --forge-accent: #00BFFF;
+    --forge-dark: #1A1A1A;
+    --forge-light: #FFFFFF;
+    
+    --bronze-color: #CD7F32;
+    --silver-color: #C0C0C0;
+    --gold-color: #FFD700;
+    --mythic-color: #B9F2FF;
+    --legendary-color: #FF4D00;
+}
+
+/* Efeitos de Partículas */
+.particle-effect {
+    position: absolute;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.sparks {
+    background: radial-gradient(circle, var(--forge-secondary) 0%, transparent 70%);
+    width: 4px;
+    height: 4px;
+    animation: sparkle 1s infinite;
+}
+
+.energy {
+    background: radial-gradient(circle, var(--forge-accent) 0%, transparent 70%);
+    width: 6px;
+    height: 6px;
+    animation: pulse 2s infinite;
+}
+
+.flames {
+    background: radial-gradient(circle, var(--forge-primary) 0%, transparent 70%);
+    width: 8px;
+    height: 8px;
+    animation: flicker 0.5s infinite;
+}
+
+/* Auras dos Ranks */
+.aura-effect {
+    position: absolute;
+    inset: -10px;
+    border-radius: inherit;
+    opacity: 0.5;
+    z-index: -1;
+    animation: aura-pulse 2s infinite;
+}
+
+.electric-aura {
+    background: linear-gradient(
+        45deg,
+        rgba(255, 255, 0, 0.3),
+        rgba(0, 255, 255, 0.3)
+    );
+    filter: blur(15px);
+}
+
+.iron-glow {
+    background: linear-gradient(
+        45deg,
+        rgba(192, 192, 192, 0.3),
+        rgba(128, 128, 128, 0.3)
+    );
+    filter: blur(10px);
+}
+
+.ground-shake {
+    background: linear-gradient(
+        45deg,
+        rgba(139, 69, 19, 0.3),
+        rgba(160, 82, 45, 0.3)
+    );
+    filter: blur(12px);
+}
+
+/* Animações */
+@keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.5); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes flicker {
+    0%, 100% { opacity: 0.8; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(-2px); }
+}
+
+@keyframes aura-pulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.05); }
+}
+
+/* Efeitos de Hover nos Cards */
+.forge-card {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.forge-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.forge-card:hover::before {
+    transform: translateX(100%);
+}
+
+.forge-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Efeitos de Progresso */
+.forge-progress {
+    position: relative;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.forge-progress::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: var(--progress, 0%);
+    background: linear-gradient(
+        90deg,
+        var(--forge-primary),
+        var(--forge-secondary)
+    );
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+/* Badges e Ícones */
+.forge-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.forge-badge i {
+    margin-right: 0.5rem;
+    font-size: 1.2em;
+}
+
+.forge-badge:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Tooltips Personalizados */
+.forge-tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.forge-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem 1rem;
+    background: var(--forge-dark);
+    color: var(--forge-light);
+    border-radius: 4px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.forge-tooltip:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .character-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .body-heatmap {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .achievements-list {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .stats-panel {
+        grid-column: 1;
+        grid-row: auto;
+    }
+}
+
+/* Temas de Rank */
+.rank-theme-novice {
+    --rank-color: var(--bronze-color);
+    --rank-glow: rgba(205, 127, 50, 0.3);
+}
+
+.rank-theme-apprentice {
+    --rank-color: var(--silver-color);
+    --rank-glow: rgba(192, 192, 192, 0.3);
+}
+
+.rank-theme-journeyman {
+    --rank-color: var(--gold-color);
+    --rank-glow: rgba(255, 215, 0, 0.3);
+}
+
+.rank-theme-master {
+    --rank-color: var(--mythic-color);
+    --rank-glow: rgba(185, 242, 255, 0.3);
+}
+
+.rank-theme-grandmaster {
+    --rank-color: var(--legendary-color);
+    --rank-glow: rgba(255, 77, 0, 0.3);
+}
+
+.rank-theme-legendary {
+    --rank-color: var(--legendary-color);
+    --rank-glow: rgba(255, 77, 0, 0.5);
+    animation: legendary-pulse 2s infinite;
+}
+
+@keyframes legendary-pulse {
+    0%, 100% {
+        filter: brightness(1) drop-shadow(0 0 10px var(--rank-glow));
+    }
+    50% {
+        filter: brightness(1.2) drop-shadow(0 0 20px var(--rank-glow));
+    }
+}
+
+/* Efeitos de Partículas para Conquistas */
+.achievement-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.achievement-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--particle-color, white);
+    border-radius: 50%;
+    animation: float-up 2s ease-out infinite;
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(100%) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100%) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Efeitos de Têmpera */
+.tempering-effect {
+    position: absolute;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Efeito de Brasas */
+.particle-ember {
+    --particle-color: #FF6B00;
+    animation: float-up 2s ease-out infinite;
+}
+
+/* Efeito de Faíscas */
+.particle-spark {
+    --particle-color: #FF4C4C;
+    animation: spark 1s ease-out infinite;
+}
+
+/* Efeito de Chamas */
+.particle-flame {
+    --particle-color: #FF9500;
+    animation: flame 1.5s ease-in-out infinite;
+}
+
+/* Efeito de Gelo */
+.particle-frost {
+    --particle-color: #00FFFF;
+    animation: frost 3s linear infinite;
+}
+
+/* Efeito de Luz Estelar */
+.particle-starlight {
+    --particle-color: #97B0C4;
+    animation: starlight 4s ease-in-out infinite;
+}
+
+/* Efeito de Plasma */
+.particle-plasma {
+    --particle-color: #5CE1E6;
+    animation: plasma 2s ease-in-out infinite;
+}
+
+/* Efeito de Vazio */
+.particle-void {
+    --particle-color: #4B0082;
+    animation: void 3s ease-in-out infinite;
+}
+
+/* Efeito de Trovão */
+.particle-thunder {
+    --particle-color: #9D00FF;
+    animation: thunder 0.5s ease-out infinite;
+}
+
+/* Animações */
+@keyframes float-up {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-20px) scale(0);
+        opacity: 0;
+    }
+}
+
+@keyframes spark {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(10px, -10px) scale(1.2);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(20px, -20px) scale(0);
+        opacity: 0;
+    }
+}
+
+@keyframes flame {
+    0% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2) translateY(-10px);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1) translateY(-20px);
+        opacity: 0;
+    }
+}
+
+@keyframes frost {
+    0% {
+        transform: rotate(0deg) scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: rotate(360deg) scale(0);
+        opacity: 0;
+    }
+}
+
+@keyframes starlight {
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.5) rotate(180deg);
+        opacity: 0.4;
+    }
+    100% {
+        transform: scale(1) rotate(360deg);
+        opacity: 0.8;
+    }
+}
+
+@keyframes plasma {
+    0% {
+        transform: scale(1) translateX(0);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.2) translateX(10px);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1) translateX(0);
+        opacity: 0.8;
+    }
+}
+
+@keyframes void {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+        filter: blur(0);
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.4;
+        filter: blur(4px);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+        filter: blur(0);
+    }
+}
+
+@keyframes thunder {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+    51% {
+        transform: scale(1);
+        opacity: 0.4;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Estilos do Mapa de Calor */
+.body-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+}
+
+.body-outline {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.muscle-highlights {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.muscle-highlight {
+    position: absolute;
+    background: radial-gradient(circle at center, var(--muscle-glow) 0%, transparent 70%);
+    opacity: calc(0.3 + (var(--muscle-intensity) * 0.7));
+    mix-blend-mode: screen;
+    transition: all 0.3s ease;
+}
+
+/* Posições específicas dos músculos */
+.muscle-highlight[data-muscle="chest"] {
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30%;
+    height: 15%;
+}
+
+.muscle-highlight[data-muscle="back"] {
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 35%;
+    height: 20%;
+}
+
+.muscle-highlight[data-muscle="shoulders"] {
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 10%;
+}
+
+.muscle-highlight[data-muscle="arms"] {
+    top: 25%;
+    width: 10%;
+    height: 20%;
+}
+
+.muscle-highlight[data-muscle="arms"]:nth-child(1) {
+    left: 25%;
+}
+
+.muscle-highlight[data-muscle="arms"]:nth-child(2) {
+    right: 25%;
+}
+
+.muscle-highlight[data-muscle="core"] {
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20%;
+    height: 25%;
+}
+
+.muscle-highlight[data-muscle="legs"] {
+    top: 60%;
+    width: 15%;
+    height: 30%;
+}
+
+.muscle-highlight[data-muscle="legs"]:nth-child(1) {
+    left: 40%;
+}
+
+.muscle-highlight[data-muscle="legs"]:nth-child(2) {
+    right: 40%;
+}
+
+/* Efeitos de Hover */
+.muscle-highlight:hover {
+    opacity: calc(0.5 + (var(--muscle-intensity) * 0.5));
+    cursor: pointer;
+}
+
+/* Tooltips */
+.muscle-tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    pointer-events: none;
+    z-index: 100;
+    transition: all 0.2s ease;
+}
+
+/* Animações de Progresso */
+.progress-bar {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+/* Efeitos de Cards */
+.achievement-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 1rem;
+    transition: all 0.3s ease;
+}
+
+.achievement-card:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.achievement-card.completed {
+    border: 1px solid var(--primary-color);
+}
+
+/* Animações de Level Up */
+@keyframes levelUp {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.level-up {
+    animation: levelUp 0.5s ease-out;
+}
+
+/* Efeitos de Guilda */
+.guild-banner {
+    position: relative;
+    padding: 2rem;
+    background: linear-gradient(
+        45deg,
+        var(--guild-primary, rgba(255, 77, 0, 0.2)),
+        var(--guild-secondary, rgba(255, 215, 0, 0.2))
+    );
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.guild-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('/assets/img/guild-pattern.png') repeat;
+    opacity: 0.1;
+    animation: banner-scroll 20s linear infinite;
+}
+
+@keyframes banner-scroll {
+    0% { background-position: 0 0; }
+    100% { background-position: 100% 100%; }
+} 

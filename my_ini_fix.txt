@@ -1,0 +1,27 @@
+# Adicione estas linhas na seção [mysqld] do arquivo C:\xampp\mysql\bin\my.ini:
+
+# Configurações para permitir TIMESTAMP com valores NULL
+explicit_defaults_for_timestamp=0
+sql_mode=NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION
+
+# Localização da seção [mysqld] no arquivo:
+# [mysqld]
+# port=3306
+# socket="C:/xampp/mysql/mysql.sock"
+# basedir="C:/xampp/mysql"
+# tmpdir="C:/xampp/tmp"
+# datadir="C:/xampp/mysql/data"
+# pid_file="mysql.pid"
+# enable-named-pipe
+# key_buffer=16M
+# max_allowed_packet=1M
+# sort_buffer_size=512K
+# net_buffer_length=8K
+# read_buffer_size=256K
+# read_rnd_buffer_size=512K
+# myisam_sort_buffer_size=8M
+# log_error="mysql_error.log"
+
+# ADICIONE AQUI:
+# explicit_defaults_for_timestamp=0
+# sql_mode=NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION 
