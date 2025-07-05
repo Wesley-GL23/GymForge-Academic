@@ -1,11 +1,24 @@
 <?php
-require_once __DIR__ . '/../config/conexao.php';
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/Auth.php';
 
-// Configurações de Segurança
-session_start();
-ini_set('session.cookie_httponly', 1);
-ini_set('session.use_only_cookies', 1);
-ini_set('session.cookie_secure', 1);
+// Iniciar sessão se ainda não estiver ativa
+if (session_status() === PHP_SESSION_NONE) {
+    // Configurar cookies seguros antes de iniciar a sessão
+    session_set_cookie_params([
+        'lifetime' => 0,
+        'path' => '/',
+        'domain' => '',
+        'secure' => true,
+        'httponly' => true,
+        'samesite' => 'Strict'
+    ]);
+    session_start();
+}
+
+// Instanciar classe Auth
+global $conn;
+$auth = new Auth($conn);
 
 // Funções de Usuário
 function cadastrarUsuario($nome, $email, $senha) {
@@ -74,6 +87,7 @@ function conectarBD() {
     return $conn;
 }
 
+// Funções de CSRF
 function generateCsrfToken() {
     if (empty($_SESSION['csrf_token'])) {
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
@@ -83,6 +97,16 @@ function generateCsrfToken() {
 
 function validateCsrfToken($token) {
     return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
+}
+
+// Funções auxiliares
+function redirectWithMessage($url, $tipo, $mensagem) {
+    $_SESSION['mensagem'] = [
+        'tipo' => $tipo,
+        'texto' => $mensagem
+    ];
+    header('Location: ' . BASE_URL . $url);
+    exit;
 }
 
 function requireAuth() {

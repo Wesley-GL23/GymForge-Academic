@@ -1,96 +1,140 @@
 ﻿<?php
-require_once __DIR__ . '/../config/conexao.php';
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/auth_functions.php';
 
-function listarExercicios() {
-    global $conn;
+/**
+ * Lista todos os exercícios disponíveis
+ */
+function listar_exercicios($filtros = []) {
+    $conn = get_connection();
+    
     try {
-        $stmt = $conn->query("SELECT * FROM exercicios ORDER BY nome");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $sql = "SELECT * FROM exercicios WHERE 1=1";
+        $params = [];
+        $types = "";
+        
+        if (!empty($filtros['grupo_muscular'])) {
+            $sql .= " AND grupo_muscular = ?";
+            $params[] = $filtros['grupo_muscular'];
+            $types .= "s";
+        }
+        
+        if (!empty($filtros['nivel'])) {
+            $sql .= " AND nivel = ?";
+            $params[] = $filtros['nivel'];
+            $types .= "s";
+        }
+        
+        $sql .= " ORDER BY nome ASC";
+        
+        $stmt = $conn->prepare($sql);
+        
+        if (!empty($params)) {
+            $stmt->bind_param($types, ...$params);
+        }
+        
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     } catch (Exception $e) {
         error_log("Erro ao listar exercícios: " . $e->getMessage());
         return [];
     }
 }
-function buscarExercicio($id) {
-    global $conn;
+
+/**
+ * Busca um exercício específico
+ */
+function buscar_exercicio($id) {
+    $conn = get_connection();
+    
     try {
         $stmt = $conn->prepare("SELECT * FROM exercicios WHERE id = ?");
-        $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
     } catch (Exception $e) {
         error_log("Erro ao buscar exercício: " . $e->getMessage());
         return null;
     }
 }
 
-function criarExercicio($dados) {
-    global $conn;
+/**
+ * Cria um novo exercício
+ */
+function criar_exercicio($dados) {
+    requireNivel('admin');
+    $conn = get_connection();
+    
     try {
-        $stmt = $conn->prepare("
-            INSERT INTO exercicios (
-                nome, descricao, categoria, grupo_muscular, 
-                nivel_dificuldade, gif_url, video_url, 
-                instrucoes, dicas_seguranca
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ");
+        $sql = "INSERT INTO exercicios (nome, descricao, grupo_muscular, nivel, video_url) 
+                VALUES (?, ?, ?, ?, ?)";
         
-        return $stmt->execute([
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssss", 
             $dados['nome'],
             $dados['descricao'],
-            $dados['categoria'],
             $dados['grupo_muscular'],
-            $dados['nivel_dificuldade'],
-            $dados['gif_url'] ?? null,
-            $dados['video_url'] ?? null,
-            $dados['instrucoes'],
-            $dados['dicas_seguranca']
-        ]);
+            $dados['nivel'],
+            $dados['video_url']
+        );
+        
+        if ($stmt->execute()) {
+            return $conn->insert_id;
+        }
+        return false;
     } catch (Exception $e) {
         error_log("Erro ao criar exercício: " . $e->getMessage());
         return false;
     }
 }
-function atualizarExercicio($id, $dados) {
-    global $conn;
+
+/**
+ * Atualiza um exercício existente
+ */
+function atualizar_exercicio($id, $dados) {
+    requireNivel('admin');
+    $conn = get_connection();
+    
     try {
-        $stmt = $conn->prepare("
-            UPDATE exercicios SET 
+        $sql = "UPDATE exercicios SET 
                 nome = ?,
                 descricao = ?,
-                categoria = ?,
                 grupo_muscular = ?,
-                nivel_dificuldade = ?,
-                gif_url = ?,
-                video_url = ?,
-                instrucoes = ?,
-                dicas_seguranca = ?,
-                updated_at = CURRENT_TIMESTAMP
-            WHERE id = ?
-        ");
+                nivel = ?,
+                video_url = ?
+                WHERE id = ?";
         
-        return $stmt->execute([
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssssi",
             $dados['nome'],
             $dados['descricao'],
-            $dados['categoria'],
             $dados['grupo_muscular'],
-            $dados['nivel_dificuldade'],
-            $dados['gif_url'] ?? null,
-            $dados['video_url'] ?? null,
-            $dados['instrucoes'],
-            $dados['dicas_seguranca'],
+            $dados['nivel'],
+            $dados['video_url'],
             $id
-        ]);
+        );
+        
+        return $stmt->execute();
     } catch (Exception $e) {
         error_log("Erro ao atualizar exercício: " . $e->getMessage());
         return false;
     }
 }
 
-function deletarExercicio($id) {
-    global $conn;
+/**
+ * Remove um exercício
+ */
+function deletar_exercicio($id) {
+    requireNivel('admin');
+    $conn = get_connection();
+    
     try {
         $stmt = $conn->prepare("DELETE FROM exercicios WHERE id = ?");
-        return $stmt->execute([$id]);
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
     } catch (Exception $e) {
         error_log("Erro ao deletar exercício: " . $e->getMessage());
         return false;

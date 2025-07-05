@@ -1,27 +1,15 @@
 <?php
-require_once '../../config/conexao.php';
-require_once '../../includes/auth_functions.php';
+require_once __DIR__ . '/../../config/config.php';
+require_once INCLUDES_DIR . '/auth_functions.php';
 
 // Verificar método da requisição
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    $_SESSION['mensagem'] = [
-        'tipo' => 'danger',
-        'texto' => 'Método não permitido'
-    ];
-    header('Location: ' . BASE_URL . '/forms/usuario/login.php');
-    exit;
+    redirectWithMessage('/forms/usuario/login.php', 'danger', 'Método não permitido');
 }
 
 // Verificar token CSRF
 if (!isset($_POST['csrf_token']) || !validateCsrfToken($_POST['csrf_token'])) {
-    http_response_code(403);
-    $_SESSION['mensagem'] = [
-        'tipo' => 'danger',
-        'texto' => 'Token inválido'
-    ];
-    header('Location: ' . BASE_URL . '/forms/usuario/login.php');
-    exit;
+    redirectWithMessage('/forms/usuario/login.php', 'danger', 'Token inválido');
 }
 
 try {
@@ -91,8 +79,8 @@ try {
         ");
         $stmt->execute([
             $_SESSION['user_id'],
-            $_SERVER['REMOTE_ADDR'],
-            $_SERVER['HTTP_USER_AGENT']
+            $_SERVER['REMOTE_ADDR'] ?? 'unknown',
+            $_SERVER['HTTP_USER_AGENT'] ?? 'unknown'
         ]);
         
         header('Location: ' . BASE_URL . $redirect);
@@ -103,10 +91,5 @@ try {
     }
     
 } catch (Exception $e) {
-    $_SESSION['mensagem'] = [
-        'tipo' => 'danger',
-        'texto' => $e->getMessage()
-    ];
-    header('Location: ' . BASE_URL . '/forms/usuario/login.php');
-    exit;
+    redirectWithMessage('/forms/usuario/login.php', 'danger', $e->getMessage());
 } 

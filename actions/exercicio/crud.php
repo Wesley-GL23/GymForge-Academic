@@ -4,7 +4,7 @@ require_once '../../includes/auth_functions.php';
 require_once '../../includes/exercise_functions.php';
 
 // Verifica se o usuário está logado e é admin
-requireAdmin();
+requireNivel('admin');
 
 // Verifica o token CSRF
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -22,16 +22,12 @@ switch ($acao) {
             $dados = [
                 'nome' => $_POST['nome'] ?? '',
                 'descricao' => $_POST['descricao'] ?? '',
-                'categoria' => $_POST['categoria'] ?? '',
                 'grupo_muscular' => $_POST['grupo_muscular'] ?? '',
-                'nivel_dificuldade' => $_POST['nivel_dificuldade'] ?? 'iniciante',
-                'gif_url' => $_POST['gif_url'] ?? null,
-                'video_url' => $_POST['video_url'] ?? null,
-                'instrucoes' => $_POST['instrucoes'] ?? '',
-                'dicas_seguranca' => $_POST['dicas_seguranca'] ?? ''
+                'nivel' => $_POST['nivel_dificuldade'] ?? 'iniciante',
+                'video_url' => $_POST['video_url'] ?? null
             ];
 
-            if (criarExercicio($dados)) {
+            if (criar_exercicio($dados)) {
                 $response = ['success' => true, 'message' => 'Exercício criado com sucesso!'];
             } else {
                 $response = ['success' => false, 'message' => 'Erro ao criar exercício.'];
@@ -45,16 +41,12 @@ switch ($acao) {
             $dados = [
                 'nome' => $_POST['nome'] ?? '',
                 'descricao' => $_POST['descricao'] ?? '',
-                'categoria' => $_POST['categoria'] ?? '',
                 'grupo_muscular' => $_POST['grupo_muscular'] ?? '',
-                'nivel_dificuldade' => $_POST['nivel_dificuldade'] ?? 'iniciante',
-                'gif_url' => $_POST['gif_url'] ?? null,
-                'video_url' => $_POST['video_url'] ?? null,
-                'instrucoes' => $_POST['instrucoes'] ?? '',
-                'dicas_seguranca' => $_POST['dicas_seguranca'] ?? ''
+                'nivel' => $_POST['nivel_dificuldade'] ?? 'iniciante',
+                'video_url' => $_POST['video_url'] ?? null
             ];
 
-            if (atualizarExercicio($id, $dados)) {
+            if (atualizar_exercicio($id, $dados)) {
                 $response = ['success' => true, 'message' => 'Exercício atualizado com sucesso!'];
             } else {
                 $response = ['success' => false, 'message' => 'Erro ao atualizar exercício.'];
@@ -65,7 +57,7 @@ switch ($acao) {
     case 'deletar':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id'] ?? 0;
-            if (deletarExercicio($id)) {
+            if (deletar_exercicio($id)) {
                 $response = ['success' => true, 'message' => 'Exercício deletado com sucesso!'];
             } else {
                 $response = ['success' => false, 'message' => 'Erro ao deletar exercício.'];
@@ -75,7 +67,7 @@ switch ($acao) {
 
     case 'buscar':
         $id = $_GET['id'] ?? 0;
-        $exercicio = buscarExercicio($id);
+        $exercicio = buscar_exercicio($id);
         if ($exercicio) {
             $response = ['success' => true, 'data' => $exercicio];
         } else {
@@ -84,7 +76,7 @@ switch ($acao) {
         break;
 
     case 'listar':
-        $exercicios = listarExercicios();
+        $exercicios = listar_exercicios();
         $response = ['success' => true, 'data' => $exercicios];
         break;
 

@@ -1,0 +1,20 @@
+<?php
+// Defina a BASE_URL de acordo com seu ambiente local
+if (!defined('BASE_URL')) {
+    define('BASE_URL', 'http://gymforge.local');
+}
+
+// Configurações de Debug
+if (!defined('DEBUG_MODE')) {
+    define('DEBUG_MODE', true);
+}
+
+// Configurações de Sessão
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Incluir funções de mensagem
+if (file_exists(__DIR__ . '/../includes/message_functions.php')) {
+    require_once __DIR__ . '/../includes/message_functions.php';
+}

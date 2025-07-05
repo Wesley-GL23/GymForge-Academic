@@ -1,72 +1,237 @@
 <?php
+// Carregar configurações primeiro
+require_once __DIR__ . '/config/config.php';
+
+// Depois carregar o header que usa as configurações
 require_once 'includes/header.php';
+require_once 'config/forge_ranks.php';
 ?>
 
-<div class="hero-section">
-    <div class="hero-content">
-        <h1>GymForge</h1>
-        <p class="hero-subtitle">Transforme seu treino em uma jornada épica</p>
-        <div class="hero-buttons">
-            <a href="/forms/usuario/cadastro.php" class="btn btn-primary btn-lg">Comece Agora</a>
-            <a href="/forms/usuario/login.php" class="btn btn-outline-light btn-lg">Já tenho conta</a>
-        </div>
-    </div>
-    <div class="particles-container" id="particles-js"></div>
-</div>
-
-<section class="features-section">
-    <div class="container">
-        <h2 class="text-center mb-5">Recursos Únicos</h2>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="feature-card glass-effect">
-                    <i class="fas fa-fire feature-icon"></i>
-                    <h3>Sistema de Têmpera</h3>
-                    <p>Evolua seus músculos através de um sistema único de têmpera, desbloqueando novos níveis de poder.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="feature-card glass-effect">
-                    <i class="fas fa-users feature-icon"></i>
-                    <h3>Guildas</h3>
-                    <p>Junte-se a outros guerreiros em guildas, participe de eventos e conquiste glória juntos.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="feature-card glass-effect">
-                    <i class="fas fa-trophy feature-icon"></i>
-                    <h3>Conquistas</h3>
-                    <p>Desbloqueie conquistas especiais e mostre sua dedicação através de emblemas únicos.</p>
+<main>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content animate-fadeInUp">
+                <h1>Transforme seu treino em uma<br>jornada épica</h1>
+                <p>Junte-se a uma comunidade de atletas determinados e alcance resultados extraordinários com nosso sistema inteligente de treinos.</p>
+                <div class="hero-buttons">
+                    <a href="<?php echo BASE_URL; ?>/forms/usuario/cadastro.php" class="btn btn-primary btn-lg">
+                        <i class="bi bi-person-plus me-2"></i>Comece Agora
+                    </a>
+                    <a href="#como-funciona" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-play-circle me-2"></i>Como Funciona
+                    </a>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="ranks-section">
-    <div class="container">
-        <h2 class="text-center mb-5">Evolua seu Personagem</h2>
-        <div class="rank-timeline">
-            <?php foreach ($RANKS as $code => $rank): ?>
-            <div class="rank-item">
-                <div class="rank-icon" style="background: <?php echo $rank['cor']; ?>">
-                    <img src="/assets/img/ranks/<?php echo $code; ?>.png" alt="<?php echo $rank['nome']; ?>">
-                </div>
-                <h4><?php echo $rank['nome']; ?></h4>
-                <p>Nível <?php echo $rank['min_level']; ?>+</p>
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Por que escolher o GymForge?</h2>
+                <p>Descubra como nossa plataforma pode transformar sua experiência de treino</p>
             </div>
-            <?php endforeach; ?>
+            <div class="row g-4">
+                <div class="col-md-4 animate-fadeInUp animate-delay-1">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-graph-up"></i>
+                        </div>
+                        <h3>Progresso Inteligente</h3>
+                        <p>Acompanhe sua evolução com métricas detalhadas e visualizações claras do seu progresso.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 animate-fadeInUp animate-delay-2">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-person-check"></i>
+                        </div>
+                        <h3>Treinos Personalizados</h3>
+                        <p>Receba programas de treino adaptados ao seu nível, objetivos e disponibilidade.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 animate-fadeInUp animate-delay-3">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-trophy"></i>
+                        </div>
+                        <h3>Sistema de Ranks</h3>
+                        <p>Evolua através dos ranks e desbloqueie novos desafios conforme progride.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="cta-section">
-    <div class="container text-center">
-        <h2>Pronto para começar sua jornada?</h2>
-        <p>Junte-se a milhares de guerreiros e comece sua transformação hoje!</p>
-        <a href="/forms/usuario/cadastro.php" class="btn btn-primary btn-lg">Criar Conta Grátis</a>
-    </div>
-</section>
+    <!-- Ranks Section -->
+    <section class="ranks">
+        <div class="container">
+            <div class="section-title text-center text-light mb-5">
+                <h2>Evolua seu Nível</h2>
+                <p>Cada rank representa um novo patamar na sua jornada fitness</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4 animate-fadeInUp">
+                    <div class="rank-card">
+                        <div class="rank-icon">
+                            <i class="bi bi-shield-fill"></i>
+                        </div>
+                        <h3>Bronze</h3>
+                        <p>Primeiros passos na jornada. Aprenda os fundamentos e construa uma base sólida.</p>
+                        <div class="rank-progress">
+                            <div class="rank-progress-bar" style="width: 30%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 animate-fadeInUp animate-delay-1">
+                    <div class="rank-card">
+                        <div class="rank-icon">
+                            <i class="bi bi-shield-fill-check"></i>
+                        </div>
+                        <h3>Prata</h3>
+                        <p>Domine as técnicas básicas e comece a explorar treinos mais desafiadores.</p>
+                        <div class="rank-progress">
+                            <div class="rank-progress-bar" style="width: 60%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 animate-fadeInUp animate-delay-2">
+                    <div class="rank-card">
+                        <div class="rank-icon">
+                            <i class="bi bi-shield-fill-exclamation"></i>
+                        </div>
+                        <h3>Ouro</h3>
+                        <p>Alcance performance avançada e inspire outros em sua jornada.</p>
+                        <div class="rank-progress">
+                            <div class="rank-progress-bar" style="width: 90%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section class="resources">
+        <div class="container">
+            <div class="section-title">
+                <h2>Recursos Exclusivos</h2>
+                <p>Ferramentas e conteúdos para maximizar seus resultados</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4 animate-fadeInUp">
+                    <div class="resource-card">
+                        <div class="resource-image" style="background-image: url('<?php echo BASE_URL; ?>/assets/img/workout-tracker.jpg')"></div>
+                        <div class="resource-content">
+                            <h3>Tracker de Treinos</h3>
+                            <p>Registre e acompanhe cada sessão de treino com detalhes precisos.</p>
+                            <div class="resource-meta">
+                                <span><i class="bi bi-clock"></i> Atualizado em tempo real</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 animate-fadeInUp animate-delay-1">
+                    <div class="resource-card">
+                        <div class="resource-image" style="background-image: url('<?php echo BASE_URL; ?>/assets/img/nutrition-guide.jpg')"></div>
+                        <div class="resource-content">
+                            <h3>Guia Nutricional</h3>
+                            <p>Dicas e orientações para uma alimentação balanceada e focada em resultados.</p>
+                            <div class="resource-meta">
+                                <span><i class="bi bi-book"></i> Conteúdo Premium</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 animate-fadeInUp animate-delay-2">
+                    <div class="resource-card">
+                        <div class="resource-image" style="background-image: url('<?php echo BASE_URL; ?>/assets/img/community.jpg')"></div>
+                        <div class="resource-content">
+                            <h3>Comunidade</h3>
+                            <p>Conecte-se com outros atletas, compartilhe experiências e celebre conquistas.</p>
+                            <div class="resource-meta">
+                                <span><i class="bi bi-people"></i> +1000 membros ativos</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Pronto para começar sua transformação?</h2>
+            <p>Junte-se a milhares de atletas que já estão transformando seus treinos com o GymForge</p>
+            <a href="<?php echo BASE_URL; ?>/forms/usuario/cadastro.php" class="btn btn-light btn-lg">
+                <i class="bi bi-arrow-right-circle me-2"></i>Comece Sua Jornada
+            </a>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>O que dizem nossos atletas</h2>
+                <p>Histórias reais de transformação e superação</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4 animate-fadeInUp">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            "O GymForge mudou completamente minha forma de treinar. Os treinos personalizados e o sistema de progressão me mantêm sempre motivado."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <img src="<?php echo BASE_URL; ?>/assets/img/testimonial-1.jpg" alt="João Silva">
+                            </div>
+                            <div class="testimonial-info">
+                                <h4>João Silva</h4>
+                                <p>Rank Ouro</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 animate-fadeInUp animate-delay-1">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            "A comunidade é incrível! Encontrei pessoas com os mesmos objetivos e isso fez toda diferença na minha motivação."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <img src="<?php echo BASE_URL; ?>/assets/img/testimonial-2.jpg" alt="Maria Santos">
+                            </div>
+                            <div class="testimonial-info">
+                                <h4>Maria Santos</h4>
+                                <p>Rank Prata</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 animate-fadeInUp animate-delay-2">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            "Os recursos de tracking e as métricas detalhadas me ajudaram a entender melhor minha evolução e ajustar meus treinos."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">
+                                <img src="<?php echo BASE_URL; ?>/assets/img/testimonial-3.jpg" alt="Pedro Oliveira">
+                            </div>
+                            <div class="testimonial-info">
+                                <h4>Pedro Oliveira</h4>
+                                <p>Rank Bronze</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
 
 <style>
 /* Hero Section */

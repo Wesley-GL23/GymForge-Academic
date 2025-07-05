@@ -1,4 +1,14 @@
 <?php
+// Este arquivo existe apenas para compatibilidade com código legado
+// A conexão agora é feita diretamente no config.php
+
+require_once __DIR__ . '/config.php';
+
+// A variável $conn já está disponível globalmente após incluir config.php
+
+// Manter compatibilidade com código antigo
+$conn = get_connection();
+
 // Configurações do banco de dados
 $db_config = [
     'host' => 'localhost',

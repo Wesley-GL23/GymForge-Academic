@@ -1,11 +1,18 @@
 <?php
+// Configurações do Banco de Dados
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'gymforge_php');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_CHARSET', 'utf8mb4');
+
 return [
     'connection' => [
-        'host' => 'localhost',
-        'dbname' => 'gymforge_php',
-        'charset' => 'utf8mb4',
-        'username' => 'root',
-        'password' => ''
+        'host' => DB_HOST,
+        'dbname' => DB_NAME,
+        'charset' => DB_CHARSET,
+        'username' => DB_USER,
+        'password' => DB_PASS
     ],
     'options' => [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

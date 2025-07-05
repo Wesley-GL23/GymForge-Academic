@@ -1,39 +1,43 @@
 <?php
-require_once 'config/config.php';
-require_once 'includes/auth_functions.php';
+// Enable error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-echo "<h1>Teste de Ambiente GymForge</h1>";
+echo "<h1>GymForge Environment Test</h1>";
 
-// Testar BASE_URL
-echo "<h2>Configuração de URL</h2>";
-echo "BASE_URL: " . BASE_URL . "<br>";
+// Test PHP version
+echo "<h2>PHP Version:</h2>";
+echo PHP_VERSION;
 
-// Testar Sessão
-echo "<h2>Sessão</h2>";
-echo "Status da Sessão: " . session_status() . "<br>";
-echo "ID da Sessão: " . session_id() . "<br>";
+// Server Information
+echo "<h2>Server Information:</h2>";
+echo "<pre>";
+echo "Server Software: " . $_SERVER['SERVER_SOFTWARE'] . "\n";
+echo "Document Root: " . $_SERVER['DOCUMENT_ROOT'] . "\n";
+echo "Script Filename: " . $_SERVER['SCRIPT_FILENAME'] . "\n";
+echo "HTTP Host: " . $_SERVER['HTTP_HOST'] . "\n";
+echo "Server Name: " . $_SERVER['SERVER_NAME'] . "\n";
+echo "Request URI: " . $_SERVER['REQUEST_URI'] . "\n";
+echo "</pre>";
 
-// Testar Banco de Dados
-echo "<h2>Banco de Dados</h2>";
-try {
-    require_once 'config/conexao.php';
-    echo "Conexão com banco de dados: OK<br>";
-    
-    $stmt = $conn->query("SELECT COUNT(*) as total FROM usuarios");
-    $result = $stmt->fetch();
-    echo "Total de usuários: " . $result['total'] . "<br>";
-} catch (Exception $e) {
-    echo "Erro no banco de dados: " . $e->getMessage() . "<br>";
+// Apache Modules (if available)
+if (function_exists('apache_get_modules')) {
+    echo "<h2>Apache Modules:</h2>";
+    echo "<pre>";
+    print_r(apache_get_modules());
+    echo "</pre>";
 }
 
-// Testar Funções de Autenticação
-echo "<h2>Funções de Autenticação</h2>";
-echo "estaLogado(): " . (estaLogado() ? "true" : "false") . "<br>";
-echo "validateCsrfToken está definida: " . (function_exists('validateCsrfToken') ? "sim" : "não") . "<br>";
+// PHP loaded extensions
+echo "<h2>PHP Extensions:</h2>";
+echo "<pre>";
+print_r(get_loaded_extensions());
+echo "</pre>";
 
-// Testar diretórios
-echo "<h2>Permissões de Diretório</h2>";
-$dirs = ['assets', 'config', 'includes', 'views'];
-foreach ($dirs as $dir) {
-    echo "$dir é gravável: " . (is_writable($dir) ? "sim" : "não") . "<br>";
-} 
+// File permissions
+echo "<h2>File Permissions:</h2>";
+echo "<pre>";
+echo "Current file: " . __FILE__ . " - Permissions: " . substr(sprintf('%o', fileperms(__FILE__)), -4) . "\n";
+echo "Parent directory: " . dirname(__FILE__) . " - Permissions: " . substr(sprintf('%o', fileperms(dirname(__FILE__))), -4) . "\n";
+echo "</pre>";
+?> 
