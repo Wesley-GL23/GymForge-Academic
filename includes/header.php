@@ -1,5 +1,24 @@
 <?php
-require_once __DIR__ . '/../config/config.php';
+// Ativar exibição de erros para debug
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Verificar se o arquivo config existe
+$config_file = __DIR__ . '/../config/config.php';
+if (!file_exists($config_file)) {
+    die('Erro: Arquivo config.php não encontrado');
+}
+
+// Tentar carregar o config
+require_once $config_file;
+
+// Verificar se BASE_URL foi definida
+if (!defined('BASE_URL')) {
+    die('Erro: BASE_URL não foi definida no config.php');
+}
+
+// Debug - remover depois
+echo "<!-- Debug: BASE_URL = " . BASE_URL . " -->";
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">

@@ -1,0 +1,12 @@
+# Adicione isso no arquivo C:\xampp\apache\conf\extra\httpd-vhosts.conf
+
+<VirtualHost *:80>
+    DocumentRoot "C:/xampp/htdocs/GymForge-PHP"
+    ServerName gymforge.local
+    ServerAlias www.gymforge.local
+    <Directory "C:/xampp/htdocs/GymForge-PHP">
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>

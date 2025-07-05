@@ -1,0 +1,22 @@
+# Adicione/verifique estas linhas no arquivo C:\xampp\apache\conf\httpd.conf
+
+# Carregar módulo vhost
+LoadModule vhost_alias_module modules/mod_vhost_alias.so
+
+# Incluir arquivo de configuração de vhosts
+Include conf/extra/httpd-vhosts.conf
+
+# Configuração do DocumentRoot principal
+DocumentRoot "C:/xampp/htdocs"
+<Directory "C:/xampp/htdocs">
+    Options Indexes FollowSymLinks Includes ExecCGI
+    AllowOverride All
+    Require all granted
+</Directory>
+
+# Configuração específica para o GymForge
+<Directory "C:/xampp/htdocs/GymForge-PHP">
+    Options Indexes FollowSymLinks Includes ExecCGI
+    AllowOverride All
+    Require all granted
+</Directory>

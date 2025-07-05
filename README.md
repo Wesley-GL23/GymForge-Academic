@@ -1,95 +1,81 @@
-# GymForge-PHP
+# GymForge - Sistema de Gerenciamento de Treinos
 
-Sistema de Gerenciamento de Treinos - Versão Acadêmica
+GymForge é um sistema web desenvolvido em PHP para gerenciamento de treinos e exercícios, permitindo que usuários criem e acompanhem seus programas de treinamento.
 
-## Descrição
-
-GymForge-PHP é uma versão acadêmica do sistema GymForge, desenvolvida como projeto para a disciplina de [Nome da Disciplina]. O sistema permite o gerenciamento de treinos, exercícios e usuários, com funcionalidades específicas para diferentes níveis de acesso.
-
-## Requisitos
+## Requisitos do Sistema
 
 - PHP 7.4 ou superior
 - MySQL 5.7 ou superior
-- Servidor Web (Apache/Nginx)
-- Extensões PHP:
-  - mysqli
-  - session
-  - gd (para manipulação de imagens)
+- Apache 2.4 ou superior
+- Extensões PHP: PDO, MySQL, JSON
 
 ## Instalação
 
-1. Clone o repositório:
+1. Clone o repositório para sua pasta htdocs do XAMPP:
 ```bash
 git clone https://github.com/seu-usuario/GymForge-PHP.git
 ```
 
 2. Configure o banco de dados:
-   - Crie um banco de dados MySQL
-   - Importe o arquivo `database/gymforge.sql`
-   - Configure as credenciais em `config/conexao.php`
+   - Importe o arquivo `database/gymforge_simple.sql`
+   - Copie `config/db_config.example.php` para `config/db_config.php`
+   - Ajuste as credenciais do banco em `config/db_config.php`
 
-3. Configure o servidor web:
-   - Aponte o document root para a pasta do projeto
-   - Certifique-se que o mod_rewrite está habilitado (Apache)
+3. Configure o Virtual Host:
+   - Adicione ao arquivo `hosts` (C:\Windows\System32\drivers\etc\hosts):
+     ```
+     127.0.0.1   gymforge.local
+     ```
+   - Adicione ao arquivo `httpd-vhosts.conf` do Apache:
+     ```apache
+     <VirtualHost *:80>
+         DocumentRoot "C:/xampp/htdocs/GymForge-PHP"
+         ServerName gymforge.local
+         <Directory "C:/xampp/htdocs/GymForge-PHP">
+             AllowOverride All
+             Require all granted
+         </Directory>
+     </VirtualHost>
+     ```
 
-4. Configure as permissões:
-```bash
-chmod 755 -R GymForge-PHP/
-chmod 777 -R GymForge-PHP/assets/gifs/
-```
+4. Reinicie o Apache
 
-5. Acesse o sistema:
-   - URL: http://localhost/GymForge-PHP
-   - Login Admin: admin@gymforge.com
-   - Senha: admin123
+## Credenciais de Teste
+
+- **Administrador**
+  - Email: admin@gymforge.com
+  - Senha: password
 
 ## Estrutura do Projeto
 
-```
-GymForge-PHP/
-├── actions/          # Arquivos de processamento de formulários
-├── assets/          # Recursos estáticos (CSS, JS, imagens)
-├── config/          # Arquivos de configuração
-├── database/        # Scripts SQL
-├── docs/            # Documentação (DER, Casos de Uso)
-├── forms/           # Formulários do sistema
-├── includes/        # Arquivos incluídos em múltiplas páginas
-└── views/           # Páginas de visualização
-```
+- `/actions` - Controladores e ações do sistema
+- `/assets` - Arquivos estáticos (CSS, JS, imagens)
+- `/config` - Arquivos de configuração
+- `/database` - Scripts SQL e migrations
+- `/docs` - Documentação e diagramas
+- `/forms` - Formulários do sistema
+- `/includes` - Funções auxiliares e componentes
+- `/views` - Páginas e templates
 
 ## Funcionalidades
 
-- Sistema de autenticação com 3 níveis de acesso
-- Gerenciamento de exercícios com GIFs demonstrativos
+### Usuário Comum
+- Cadastro e login
+- Visualização de exercícios
 - Criação e gerenciamento de treinos
-- Sistema de notificações
-- Perfil do usuário
-- Dicas de treino
-- Interface responsiva com Bootstrap
+- Registro de progresso
 
-## Desenvolvimento
-
-- Tecnologias: PHP (procedural), MySQL, Bootstrap
-- Validação client-side e server-side
-- Organização modular do código
-- Práticas de segurança implementadas
+### Administrador
+- Gerenciamento de exercícios
+- Gerenciamento de usuários
+- Visualização de relatórios
 
 ## Documentação
 
-- Diagrama de Casos de Uso: `docs/casos-de-uso.png`
-- Diagrama Entidade-Relacionamento: `docs/der.png`
-- Relatório de uso de IA: `docs/relatorio-ia.pdf`
-
-## Contribuição
-
-Este é um projeto acadêmico desenvolvido para fins educacionais. Contribuições são bem-vindas através de pull requests.
+- [Diagramas do Sistema](docs/DIAGRAMAS.md)
+- [Arquitetura](docs/ARCHITECTURE.md)
+- [Guia da Marca](docs/BRAND_GUIDELINES.md)
 
 ## Licença
 
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
-## Autor
-
-[Seu Nome]
-[Sua Instituição de Ensino]
-[Seu Email] 

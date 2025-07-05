@@ -2,7 +2,7 @@
 return [
     'connection' => [
         'host' => 'localhost',
-        'dbname' => 'gymforge',
+        'dbname' => 'gymforge_php',
         'charset' => 'utf8mb4',
         'username' => 'root',
         'password' => ''
@@ -19,4 +19,4 @@ return [
         'both' => PDO::FETCH_BOTH,
         'column' => PDO::FETCH_COLUMN
     ]
-]; 
+];
