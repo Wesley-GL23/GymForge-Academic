@@ -3,14 +3,14 @@ require_once __DIR__ . '/../../includes/auth_functions.php';
 require_once __DIR__ . '/../../includes/training_functions.php';
 
 // Verifica se o usuário está logado
-if (!esta_logado()) {
+if (!estaLogado()) {
     header('Location: /forms/usuario/login.php');
     exit;
 }
 
 // Verifica o token CSRF
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!isset($_POST['csrf_token']) || !verificar_csrf_token($_POST['csrf_token'])) {
+    if (!isset($_POST['csrf_token']) || !validateCsrfToken($_POST['csrf_token'])) {
         $_SESSION['erro'] = "Erro de validação do formulário.";
         header('Location: /forms/treino/form.php');
         exit;
