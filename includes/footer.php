@@ -64,15 +64,15 @@
                     <div class="contact-info mb-4">
                         <div class="d-flex align-items-center mb-2">
                             <i class="bi bi-envelope text-accent me-2"></i>
-                            <span>suporte@gymforge.com</span>
+                            <span>gymforge.team@gmail.com</span>
                         </div>
                         <div class="d-flex align-items-center mb-2">
                             <i class="bi bi-telephone text-accent me-2"></i>
-                            <span>+55 (11) 99999-9999</span>
+                            <span>+55 (42) 991189188</span>
                         </div>
                         <div class="d-flex align-items-center mb-2">
                             <i class="bi bi-geo-alt text-accent me-2"></i>
-                            <span>São Paulo, SP - Brasil</span>
+                            <span>Telêmaco Borba, PR - Brasil</span>
                         </div>
                         <div class="d-flex align-items-center">
                             <i class="bi bi-clock text-accent me-2"></i>
@@ -102,7 +102,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <p class="mb-0 text-muted">
-                            &copy; 2024 GymForge. Todos os direitos reservados.
+                            &copy; 2025 GymForge. Todos os direitos reservados.
                         </p>
                     </div>
                     <div class="col-md-6 text-md-end">
@@ -137,6 +137,7 @@
     <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     
     <!-- Scripts Adicionais -->
     <script>
@@ -168,6 +169,29 @@
         var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
         var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
             return new bootstrap.Popover(popoverTriggerEl);
+        });
+
+        // Inicializar Typed.js
+        if (document.querySelector('.hero-dynamic-text')) {
+            const typed = new Typed('.hero-dynamic-text', {
+                strings: document.querySelector('.hero-dynamic-text').getAttribute('data-typed-items').split(','),
+                typeSpeed: 100,
+                backSpeed: 50,
+                backDelay: 2000,
+                loop: true,
+                showCursor: true,
+                cursorChar: '|'
+            });
+        }
+
+        // Navbar Scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
     </script>
     

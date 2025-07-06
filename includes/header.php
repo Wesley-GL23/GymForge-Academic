@@ -63,9 +63,11 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
     <meta name="author" content="GymForge">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>assets/img/gymforge-badge.png">
-    <link rel="icon" type="image/x-icon" href="<?php echo BASE_URL; ?>assets/img/gymforge-badge.png">
-    <link rel="apple-touch-icon" href="<?php echo BASE_URL; ?>assets/img/gymforge-badge.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo BASE_URL; ?>assets/img/gymforge-badge.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo BASE_URL; ?>assets/img/gymforge-badge.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo BASE_URL; ?>assets/img/gymforge-badge.png">
+    <link rel="manifest" href="<?php echo BASE_URL; ?>site.webmanifest">
+    <meta name="theme-color" content="#1A1A1A">
     
     <!-- Open Graph -->
     <meta property="og:title" content="<?php echo isset($page_title) ? $page_title . ' - ' : ''; ?>GymForge">
@@ -77,8 +79,8 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="<?php echo BASE_URL; ?>assets/css/styles.css" rel="stylesheet">
     <link href="<?php echo BASE_URL; ?>assets/css/forge.css" rel="stylesheet">
+    <link href="<?php echo BASE_URL; ?>assets/css/style.css" rel="stylesheet">
     
     <!-- Preload de fontes críticas -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -296,8 +298,9 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
     }
     </script>
 
-    <!-- Conteúdo Principal -->
-    <main class="container py-4">
+    <!-- Main Container -->
+    <main class="forge-main">
+        <div class="forge-container">
     <!-- Scripts serão carregados no footer.php -->
 </body>
 </html> 
