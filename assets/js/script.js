@@ -136,4 +136,107 @@ function atualizarContadorNotificacoes() {
             contador.style.display = 'none';
         }
     });
-} 
+}
+
+// Header Scroll Effect
+document.addEventListener('DOMContentLoaded', function() {
+    const navbar = document.querySelector('.forge-navbar');
+    let lastScroll = 0;
+    
+    window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset;
+        
+        // Adiciona classe quando rola mais que 50px
+        if (currentScroll > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+        
+        lastScroll = currentScroll;
+    });
+});
+
+// Toggle Password Visibility
+function togglePassword(inputId) {
+    const input = document.getElementById(inputId);
+    const type = input.type === 'password' ? 'text' : 'password';
+    input.type = type;
+    
+    const icon = input.nextElementSibling.querySelector('i');
+    icon.classList.toggle('bi-eye');
+    icon.classList.toggle('bi-eye-slash');
+}
+
+// Dropdown Menu Animation
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+    
+    dropdowns.forEach(dropdown => {
+        const menu = dropdown.querySelector('.dropdown-menu');
+        
+        dropdown.addEventListener('show.bs.dropdown', function() {
+            menu.classList.add('animate__animated', 'animate__fadeIn');
+        });
+        
+        dropdown.addEventListener('hide.bs.dropdown', function() {
+            menu.classList.add('animate__animated', 'animate__fadeOut');
+            setTimeout(() => {
+                menu.classList.remove('animate__animated', 'animate__fadeOut');
+            }, 300);
+        });
+    });
+});
+
+// Alert Auto-dismiss
+document.addEventListener('DOMContentLoaded', function() {
+    const alerts = document.querySelectorAll('.forge-alert');
+    
+    alerts.forEach(alert => {
+        setTimeout(() => {
+            const bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+        }, 5000);
+    });
+});
+
+// Form Validation
+document.addEventListener('DOMContentLoaded', function() {
+    const forms = document.querySelectorAll('form[data-validate]');
+    
+    forms.forEach(form => {
+        form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            form.classList.add('was-validated');
+        });
+    });
+});
+
+// Loading State for Buttons
+document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.forge-button[type="submit"]');
+    
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            const form = button.closest('form');
+            
+            if (form && form.checkValidity()) {
+                const originalContent = button.innerHTML;
+                button.disabled = true;
+                button.innerHTML = '<div class="forge-loading"></div>';
+                
+                // Restaura o botão após 3 segundos se o form não foi submetido
+                setTimeout(() => {
+                    if (button.disabled) {
+                        button.disabled = false;
+                        button.innerHTML = originalContent;
+                    }
+                }, 3000);
+            }
+        });
+    });
+}); 

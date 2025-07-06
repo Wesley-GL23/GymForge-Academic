@@ -3,11 +3,26 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Carregar configurações
-require_once dirname(__DIR__) . '/config/config.php';
+// Configurações e constantes
+if (!defined('BASE_URL')) {
+    require_once __DIR__ . '/../config/config.php';
+}
 
-// Verificar autenticação
-require_once INCLUDES_DIR . '/auth_check.php';
+// Funções de autenticação
+require_once __DIR__ . '/auth_functions.php';
+
+// Iniciar ou recuperar sessão
+session_start();
+
+// Informações do usuário logado
+$usuario_atual = usuarioAtual();
+$is_logged = estaLogado();
+$user_level = $usuario_atual ? $usuario_atual['nivel'] : null;
+
+// Título padrão se não definido
+if (!isset($titulo)) {
+    $titulo = 'GymForge';
+}
 
 // Forçar HTTPS
 if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
@@ -40,28 +55,28 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo isset($page_title) ? $page_title . ' - ' : ''; ?>GymForge - Forjando sua melhor versão</title>
+    <title><?php echo $titulo; ?> - GymForge</title>
     
     <!-- Meta Tags SEO -->
     <meta name="description" content="<?php echo isset($page_description) ? $page_description : 'GymForge - Plataforma completa para gerenciamento de academias e acompanhamento de treinos. Transforme sua jornada fitness.'; ?>">
     <meta name="keywords" content="academia, treinos, exercícios, fitness, saúde, GymForge">
     <meta name="author" content="GymForge">
     
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="<?php echo BASE_URL; ?>assets/img/gymforge-badge.png" type="image/png">
+    
     <!-- Open Graph -->
     <meta property="og:title" content="<?php echo isset($page_title) ? $page_title . ' - ' : ''; ?>GymForge">
     <meta property="og:description" content="<?php echo isset($page_description) ? $page_description : 'Transforme sua jornada fitness com o GymForge.'; ?>">
     <meta property="og:type" content="website">
     <meta property="og:url" content="<?php echo $_SERVER['REQUEST_URI']; ?>">
-    <meta property="og:image" content="<?php echo BASE_URL; ?>assets/img/og-image.jpg">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="<?php echo BASE_URL; ?>assets/img/favicon.ico">
-    <link rel="apple-touch-icon" href="<?php echo BASE_URL; ?>assets/img/apple-touch-icon.png">
+    <meta property="og:image" content="<?php echo BASE_URL; ?>assets/img/gymforge-logo.jpeg">
     
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="<?php echo BASE_URL; ?>assets/css/styles.css" rel="stylesheet">
+    <link href="<?php echo BASE_URL; ?>assets/css/forge.css" rel="stylesheet">
     
     <!-- Preload de fontes críticas -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -83,194 +98,201 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
     }
     </script>
 </head>
-<body>
-    <!-- Navbar Profissional -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+<body class="<?php echo isset($body_class) ? $body_class : ''; ?>">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark forge-navbar">
         <div class="container">
-            <!-- Logo -->
-            <a class="navbar-brand" href="<?php echo BASE_URL; ?>">
-                <i class="bi bi-lightning-charge-fill text-accent"></i>
-                <span class="ms-2">GYMFORGE</span>
+            <a class="navbar-brand forge-brand" href="<?php echo BASE_URL; ?>">
+                <div class="brand-logo">
+                    <img src="<?php echo BASE_URL; ?>assets/img/logo.png" alt="GymForge" class="brand-image">
+                </div>
+                <span class="brand-text">GymForge</span>
             </a>
             
-            <!-- Botão Mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler forge-button" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             
-            <!-- Menu Principal -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>">
-                            <i class="bi bi-house-door me-1"></i>Início
+                        <a class="nav-link forge-nav-link <?php echo $current_page === 'index' ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>">
+                            <i class="bi bi-house-door"></i>
+                            <span>Início</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'exercises.php' ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>exercises.php">
-                            <i class="bi bi-collection me-1"></i>Exercícios
+                        <a class="nav-link forge-nav-link <?php echo $current_page === 'biblioteca' ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>views/exercicios/biblioteca.php">
+                            <i class="bi bi-journal-text"></i>
+                            <span>Exercícios</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'workouts.php' ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>workouts.php">
-                            <i class="bi bi-activity me-1"></i>Treinos
+                        <a class="nav-link forge-nav-link <?php echo $current_page === 'treinos' ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>views/treinos/">
+                            <i class="bi bi-lightning-charge"></i>
+                            <span>Treinos</span>
+                        </a>
+                    </li>
+                    <?php if ($is_logged): ?>
+                    <li class="nav-item">
+                        <a class="nav-link forge-nav-link <?php echo $current_page === 'character' ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>views/forge/character.php">
+                            <i class="bi bi-person-badge"></i>
+                            <span>Meu Personagem</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>about.php">
-                            <i class="bi bi-info-circle me-1"></i>Sobre
+                        <a class="nav-link forge-nav-link <?php echo $current_page === 'guilds' ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>views/forge/guilds.php">
+                            <i class="bi bi-people"></i>
+                            <span>Guildas</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>contact.php">
-                            <i class="bi bi-envelope me-1"></i>Contato
-                        </a>
-                    </li>
+                    <?php endif; ?>
                 </ul>
                 
-                <!-- Área do Usuário -->
-                <div class="navbar-nav ms-auto">
-                    <?php if (isset($_SESSION['user_id'])): ?>
-                        <!-- Usuário Logado -->
-                        <div class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <div class="avatar me-2">
+                <ul class="navbar-nav">
+                    <?php if ($is_logged): ?>
+                        <?php if ($user_level === 'admin'): ?>
+                        <li class="nav-item">
+                            <a class="nav-link forge-nav-link" href="<?php echo BASE_URL; ?>views/admin/">
+                                <i class="bi bi-gear"></i>
+                                <span>Admin</span>
+                            </a>
+                        </li>
+                        <?php endif; ?>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link forge-nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                                <div class="user-avatar">
                                     <i class="bi bi-person-circle"></i>
                                 </div>
-                                <span><?php echo htmlspecialchars($_SESSION['user_name'] ?? 'Usuário'); ?></span>
+                                <span class="d-none d-lg-inline"><?php echo $usuario_atual['nome']; ?></span>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
+                            <ul class="dropdown-menu forge-dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="<?php echo BASE_URL; ?>dashboard.php">
-                                        <i class="bi bi-speedometer2 me-2"></i>Dashboard
+                                    <a class="dropdown-item" href="<?php echo BASE_URL; ?>views/dashboard/">
+                                        <i class="bi bi-speedometer2"></i>
+                                        <span>Dashboard</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="<?php echo BASE_URL; ?>profile.php">
-                                        <i class="bi bi-person me-2"></i>Perfil
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="<?php echo BASE_URL; ?>settings.php">
-                                        <i class="bi bi-gear me-2"></i>Configurações
+                                    <a class="dropdown-item" href="<?php echo BASE_URL; ?>views/perfil/">
+                                        <i class="bi bi-person"></i>
+                                        <span>Meu Perfil</span>
                                     </a>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
-                                    <a class="dropdown-item text-danger" href="<?php echo BASE_URL; ?>logout.php">
-                                        <i class="bi bi-box-arrow-right me-2"></i>Sair
+                                    <a class="dropdown-item text-danger" href="<?php echo BASE_URL; ?>actions/usuario/logout.php">
+                                        <i class="bi bi-box-arrow-right"></i>
+                                        <span>Sair</span>
                                     </a>
                                 </li>
                             </ul>
-                        </div>
+                        </li>
                     <?php else: ?>
-                        <!-- Usuário Não Logado -->
-                        <div class="nav-item me-2">
-                            <a class="btn btn-outline-light btn-sm" href="#" data-modal="loginModal">
-                                <i class="bi bi-box-arrow-in-right me-1"></i>Entrar
+                        <li class="nav-item">
+                            <a class="forge-button forge-button--secondary me-2" href="<?php echo BASE_URL; ?>forms/usuario/login.php">
+                                <i class="bi bi-box-arrow-in-right"></i>
+                                <span>Entrar</span>
                             </a>
-                        </div>
-                        <div class="nav-item">
-                            <a class="btn btn-accent btn-sm" href="#" data-modal="registerModal">
-                                <i class="bi bi-person-plus me-1"></i>Cadastrar
+                        </li>
+                        <li class="nav-item">
+                            <a class="forge-button forge-button--primary" href="<?php echo BASE_URL; ?>forms/usuario/cadastro.php">
+                                <i class="bi bi-person-plus"></i>
+                                <span>Cadastrar</span>
                             </a>
-                        </div>
+                        </li>
                     <?php endif; ?>
-                </div>
+                </ul>
             </div>
         </div>
     </nav>
-    
+
+    <?php if (isset($_SESSION['mensagem'])): ?>
+    <div class="alert forge-alert alert-<?php echo $_SESSION['mensagem']['tipo']; ?> alert-dismissible fade show" role="alert">
+        <div class="alert-icon">
+            <?php
+            $icon = 'info-circle';
+            switch ($_SESSION['mensagem']['tipo']) {
+                case 'success':
+                    $icon = 'check-circle';
+                    break;
+                case 'danger':
+                    $icon = 'exclamation-circle';
+                    break;
+                case 'warning':
+                    $icon = 'exclamation-triangle';
+                    break;
+            }
+            ?>
+            <i class="bi bi-<?php echo $icon; ?>"></i>
+        </div>
+        <div class="alert-content">
+            <?php echo $_SESSION['mensagem']['texto']; ?>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <?php unset($_SESSION['mensagem']); endif; ?>
+
     <!-- Espaçamento para navbar fixa -->
-    <div style="height: 80px;"></div>
+    <div class="forge-navbar-spacer"></div>
     
     <!-- Modais de Login/Registro -->
     <?php if (!isset($_SESSION['user_id'])): ?>
         <!-- Modal de Login -->
-        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal fade forge-modal" id="loginModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header border-0">
-                        <h5 class="modal-title" id="loginModalLabel">
-                            <i class="bi bi-box-arrow-in-right text-primary me-2"></i>Entrar no GymForge
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="bi bi-box-arrow-in-right text-primary me-2"></i>
+                            Entrar no GymForge
                         </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         <form data-validate>
                             <div class="mb-3">
-                                <label for="loginEmail" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="loginEmail" required>
+                                <label class="form-label" for="loginEmail">Email</label>
+                                <input type="email" class="forge-input" id="loginEmail" required>
                             </div>
                             <div class="mb-3">
-                                <label for="loginPassword" class="form-label">Senha</label>
-                                <input type="password" class="form-control" id="loginPassword" required>
+                                <label class="form-label" for="loginPassword">Senha</label>
+                                <div class="input-group">
+                                    <input type="password" class="forge-input" id="loginPassword" required>
+                                    <button type="button" class="forge-button forge-button--secondary" onclick="togglePassword('loginPassword')">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
                             </div>
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="rememberMe">
                                 <label class="form-check-label" for="rememberMe">Lembrar de mim</label>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">
-                                <i class="bi bi-box-arrow-in-right me-2"></i>Entrar
-                            </button>
-                        </form>
-                        <div class="text-center mt-3">
-                            <a href="#" class="text-decoration-none">Esqueceu sua senha?</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Modal de Registro -->
-        <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header border-0">
-                        <h5 class="modal-title" id="registerModalLabel">
-                            <i class="bi bi-person-plus text-accent me-2"></i>Criar Conta
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form data-validate>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="registerName" class="form-label">Nome</label>
-                                    <input type="text" class="form-control" id="registerName" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="registerLastName" class="form-label">Sobrenome</label>
-                                    <input type="text" class="form-control" id="registerLastName" required>
-                                </div>
+                            <div class="d-grid">
+                                <button type="submit" class="forge-button forge-button--primary">
+                                    <i class="bi bi-box-arrow-in-right"></i>
+                                    <span>Entrar</span>
+                                </button>
                             </div>
-                            <div class="mb-3">
-                                <label for="registerEmail" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="registerEmail" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="registerPassword" class="form-label">Senha</label>
-                                <input type="password" class="form-control" id="registerPassword" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="registerConfirmPassword" class="form-label">Confirmar Senha</label>
-                                <input type="password" class="form-control" id="registerConfirmPassword" required>
-                            </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="agreeTerms" required>
-                                <label class="form-check-label" for="agreeTerms">
-                                    Concordo com os <a href="#" class="text-decoration-none">Termos de Uso</a>
-                                </label>
-                            </div>
-                            <button type="submit" class="btn btn-accent w-100">
-                                <i class="bi bi-person-plus me-2"></i>Criar Conta
-                            </button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     <?php endif; ?>
+
+    <script>
+    function togglePassword(inputId) {
+        const input = document.getElementById(inputId);
+        const type = input.type === 'password' ? 'text' : 'password';
+        input.type = type;
+        
+        const icon = input.nextElementSibling.querySelector('i');
+        icon.classList.toggle('bi-eye');
+        icon.classList.toggle('bi-eye-slash');
+    }
+    </script>
 
     <!-- Conteúdo Principal -->
     <main class="container py-4">
