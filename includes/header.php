@@ -63,7 +63,9 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
     <meta name="author" content="GymForge">
     
     <!-- Favicon -->
-    <link rel="shortcut icon" href="<?php echo BASE_URL; ?>assets/img/gymforge-badge.png" type="image/png">
+    <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>assets/img/gymforge-badge.png">
+    <link rel="icon" type="image/x-icon" href="<?php echo BASE_URL; ?>assets/img/gymforge-badge.png">
+    <link rel="apple-touch-icon" href="<?php echo BASE_URL; ?>assets/img/gymforge-badge.png">
     
     <!-- Open Graph -->
     <meta property="og:title" content="<?php echo isset($page_title) ? $page_title . ' - ' : ''; ?>GymForge">

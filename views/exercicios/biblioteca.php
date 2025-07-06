@@ -4,7 +4,7 @@ require_once '../../includes/auth_functions.php';
 require_once '../../includes/exercise_functions.php';
 
 // Carrega os exercícios do banco de dados
-$exercicios = listarExercicios();
+$exercicios = listar_exercicios();
 $categorias = listarCategorias();
 $gruposMusculares = listarGruposMusculares();
 $niveisDificuldade = listarNiveisDificuldade();

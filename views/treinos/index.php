@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../includes/auth_functions.php';
 require_once __DIR__ . '/../../includes/training_functions.php';
 
 // Verifica se o usuário está logado
-if (!esta_logado()) {
+if (!estaLogado()) {
     header('Location: /forms/usuario/login.php');
     exit;
 }
