@@ -7,8 +7,8 @@ Este documento contém os diagramas principais do sistema GymForge, incluindo o 
 Para baixar os diagramas em formato SVG para uso em documentação:
 
 1. **Direto do GitHub:**
-   - [Diagrama de Caso de Uso (SVG)](https://raw.githubusercontent.com/SEU_USUARIO/GymForge-Academic/main/docs/images/use_case.svg)
-   - [Diagrama ER (SVG)](https://raw.githubusercontent.com/SEU_USUARIO/GymForge-Academic/main/docs/images/er_diagram.svg)
+   - [Diagrama de Caso de Uso (SVG)](https://raw.githubusercontent.com/Wesley-GL23/GymForge-Academic/main/docs/images/use_case.svg)
+   - [Diagrama ER (SVG)](https://raw.githubusercontent.com/Wesley-GL23/GymForge-Academic/main/docs/images/er_diagram.svg)
 
 2. **Localmente:**
    Os arquivos estão disponíveis em:
