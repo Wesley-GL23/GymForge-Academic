@@ -1,98 +1,122 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="800" viewBox="0 0 1000 800">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1200" height="800" viewBox="0 0 1200 800">
   <style>
-    text { font-family: Arial, sans-serif; }
+    text { font-family: Arial, sans-serif; font-size: 14px; }
     .entity { fill: #FF6B00; stroke: #FFD700; stroke-width: 2; }
-    .attribute { fill: white; stroke: #FF6B00; stroke-width: 2; }
-    .relationship { stroke: #FFD700; stroke-width: 2; fill: none; }
+    .entity-header { fill: #FF8533; stroke: none; }
+    .attribute { fill: white; stroke: #FF6B00; stroke-width: 1; }
+    .relationship { stroke: #FFD700; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
     .text { fill: black; }
+    .header-text { fill: white; font-weight: bold; }
+    .key { font-style: italic; }
   </style>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#FFD700"/>
+    </marker>
+  </defs>
   
   <!-- Entidades -->
   <g class="entities">
     <!-- USUARIO -->
-    <rect class="entity" x="50" y="50" width="200" height="200" rx="5"/>
-    <text class="text" x="150" y="80" text-anchor="middle" font-weight="bold">USUARIO</text>
-    <line x1="50" y1="90" x2="250" y2="90" stroke="#FFD700" stroke-width="2"/>
-    <text class="text" x="60" y="110">id (PK)</text>
-    <text class="text" x="60" y="130">nome</text>
-    <text class="text" x="60" y="150">email</text>
-    <text class="text" x="60" y="170">senha</text>
-    <text class="text" x="60" y="190">nivel_acesso</text>
-    <text class="text" x="60" y="210">criado_em</text>
+    <g transform="translate(100,100)">
+      <rect class="entity" width="200" height="180" rx="5"/>
+      <rect class="entity-header" width="200" height="40" rx="5"/>
+      <text class="header-text" x="100" y="25" text-anchor="middle">USUARIO</text>
+      <line x1="0" y1="40" x2="200" y2="40" stroke="#FFD700" stroke-width="2"/>
+      <text class="text" x="10" y="65"><tspan class="key">id (PK)</tspan></text>
+      <text class="text" x="10" y="90">nome</text>
+      <text class="text" x="10" y="115">email</text>
+      <text class="text" x="10" y="140">senha</text>
+      <text class="text" x="10" y="165">nivel_acesso</text>
+    </g>
     
     <!-- EXERCICIO -->
-    <rect class="entity" x="350" y="50" width="200" height="200" rx="5"/>
-    <text class="text" x="450" y="80" text-anchor="middle" font-weight="bold">EXERCICIO</text>
-    <line x1="350" y1="90" x2="550" y2="90" stroke="#FFD700" stroke-width="2"/>
-    <text class="text" x="360" y="110">id (PK)</text>
-    <text class="text" x="360" y="130">nome</text>
-    <text class="text" x="360" y="150">descricao</text>
-    <text class="text" x="360" y="170">video_url</text>
-    <text class="text" x="360" y="190">equipamento</text>
-    <text class="text" x="360" y="210">grupo_muscular</text>
+    <g transform="translate(500,100)">
+      <rect class="entity" width="200" height="180" rx="5"/>
+      <rect class="entity-header" width="200" height="40" rx="5"/>
+      <text class="header-text" x="100" y="25" text-anchor="middle">EXERCICIO</text>
+      <line x1="0" y1="40" x2="200" y2="40" stroke="#FFD700" stroke-width="2"/>
+      <text class="text" x="10" y="65"><tspan class="key">id (PK)</tspan></text>
+      <text class="text" x="10" y="90">nome</text>
+      <text class="text" x="10" y="115">descricao</text>
+      <text class="text" x="10" y="140">video_url</text>
+      <text class="text" x="10" y="165">grupo_muscular</text>
+    </g>
     
     <!-- TREINO -->
-    <rect class="entity" x="650" y="50" width="200" height="150" rx="5"/>
-    <text class="text" x="750" y="80" text-anchor="middle" font-weight="bold">TREINO</text>
-    <line x1="650" y1="90" x2="850" y2="90" stroke="#FFD700" stroke-width="2"/>
-    <text class="text" x="660" y="110">id (PK)</text>
-    <text class="text" x="660" y="130">usuario_id (FK)</text>
-    <text class="text" x="660" y="150">nome</text>
-    <text class="text" x="660" y="170">data_criacao</text>
+    <g transform="translate(900,100)">
+      <rect class="entity" width="200" height="140" rx="5"/>
+      <rect class="entity-header" width="200" height="40" rx="5"/>
+      <text class="header-text" x="100" y="25" text-anchor="middle">TREINO</text>
+      <line x1="0" y1="40" x2="200" y2="40" stroke="#FFD700" stroke-width="2"/>
+      <text class="text" x="10" y="65"><tspan class="key">id (PK)</tspan></text>
+      <text class="text" x="10" y="90"><tspan class="key">usuario_id (FK)</tspan></text>
+      <text class="text" x="10" y="115">nome</text>
+    </g>
     
     <!-- TREINO_EXERCICIO -->
-    <rect class="entity" x="350" y="300" width="200" height="150" rx="5"/>
-    <text class="text" x="450" y="330" text-anchor="middle" font-weight="bold">TREINO_EXERCICIO</text>
-    <line x1="350" y1="340" x2="550" y2="340" stroke="#FFD700" stroke-width="2"/>
-    <text class="text" x="360" y="360">treino_id (FK)</text>
-    <text class="text" x="360" y="380">exercicio_id (FK)</text>
-    <text class="text" x="360" y="400">series</text>
-    <text class="text" x="360" y="420">repeticoes</text>
+    <g transform="translate(500,400)">
+      <rect class="entity" width="200" height="140" rx="5"/>
+      <rect class="entity-header" width="200" height="40" rx="5"/>
+      <text class="header-text" x="100" y="25" text-anchor="middle">TREINO_EXERCICIO</text>
+      <line x1="0" y1="40" x2="200" y2="40" stroke="#FFD700" stroke-width="2"/>
+      <text class="text" x="10" y="65"><tspan class="key">treino_id (FK)</tspan></text>
+      <text class="text" x="10" y="90"><tspan class="key">exercicio_id (FK)</tspan></text>
+      <text class="text" x="10" y="115">series</text>
+      <text class="text" x="10" y="140">repeticoes</text>
+    </g>
     
     <!-- GUILDA -->
-    <rect class="entity" x="50" y="300" width="200" height="150" rx="5"/>
-    <text class="text" x="150" y="330" text-anchor="middle" font-weight="bold">GUILDA</text>
-    <line x1="50" y1="340" x2="250" y2="340" stroke="#FFD700" stroke-width="2"/>
-    <text class="text" x="60" y="360">id (PK)</text>
-    <text class="text" x="60" y="380">nome</text>
-    <text class="text" x="60" y="400">descricao</text>
-    <text class="text" x="60" y="420">lider_id (FK)</text>
+    <g transform="translate(100,400)">
+      <rect class="entity" width="200" height="140" rx="5"/>
+      <rect class="entity-header" width="200" height="40" rx="5"/>
+      <text class="header-text" x="100" y="25" text-anchor="middle">GUILDA</text>
+      <line x1="0" y1="40" x2="200" y2="40" stroke="#FFD700" stroke-width="2"/>
+      <text class="text" x="10" y="65"><tspan class="key">id (PK)</tspan></text>
+      <text class="text" x="10" y="90">nome</text>
+      <text class="text" x="10" y="115">descricao</text>
+      <text class="text" x="10" y="140"><tspan class="key">lider_id (FK)</tspan></text>
+    </g>
     
     <!-- MEMBRO_GUILDA -->
-    <rect class="entity" x="650" y="300" width="200" height="150" rx="5"/>
-    <text class="text" x="750" y="330" text-anchor="middle" font-weight="bold">MEMBRO_GUILDA</text>
-    <line x1="650" y1="340" x2="850" y2="340" stroke="#FFD700" stroke-width="2"/>
-    <text class="text" x="660" y="360">usuario_id (FK)</text>
-    <text class="text" x="660" y="380">guilda_id (FK)</text>
-    <text class="text" x="660" y="400">rank</text>
-    <text class="text" x="660" y="420">data_entrada</text>
+    <g transform="translate(900,400)">
+      <rect class="entity" width="200" height="140" rx="5"/>
+      <rect class="entity-header" width="200" height="40" rx="5"/>
+      <text class="header-text" x="100" y="25" text-anchor="middle">MEMBRO_GUILDA</text>
+      <line x1="0" y1="40" x2="200" y2="40" stroke="#FFD700" stroke-width="2"/>
+      <text class="text" x="10" y="65"><tspan class="key">usuario_id (FK)</tspan></text>
+      <text class="text" x="10" y="90"><tspan class="key">guilda_id (FK)</tspan></text>
+      <text class="text" x="10" y="115">rank</text>
+      <text class="text" x="10" y="140">data_entrada</text>
+    </g>
   </g>
   
   <!-- Relacionamentos -->
   <g class="relationships">
     <!-- USUARIO -> TREINO -->
-    <path class="relationship" d="M250,150 L650,150"/>
-    <text class="text" x="450" y="140">cria</text>
+    <path class="relationship" d="M300,190 H900"/>
+    <text class="text" x="600" y="170">cria</text>
     
     <!-- TREINO -> TREINO_EXERCICIO -->
-    <path class="relationship" d="M750,200 L750,375 L550,375"/>
-    <text class="text" x="600" y="365">contem</text>
+    <path class="relationship" d="M1000,240 V470 H700"/>
+    <text class="text" x="850" y="460">contém</text>
     
     <!-- EXERCICIO -> TREINO_EXERCICIO -->
-    <path class="relationship" d="M450,250 L450,300"/>
-    <text class="text" x="460" y="280">pertence</text>
+    <path class="relationship" d="M600,280 V400"/>
+    <text class="text" x="620" y="340">pertence</text>
     
     <!-- USUARIO -> GUILDA -->
-    <path class="relationship" d="M150,250 L150,300"/>
-    <text class="text" x="160" y="280">lidera</text>
+    <path class="relationship" d="M200,280 V400"/>
+    <text class="text" x="220" y="340">lidera</text>
     
     <!-- USUARIO -> MEMBRO_GUILDA -->
-    <path class="relationship" d="M250,150 C450,150 650,150 750,300"/>
-    <text class="text" x="500" y="140">participa</text>
+    <path class="relationship" d="M300,190 Q600,190 900,400"/>
+    <text class="text" x="600" y="250">participa</text>
     
     <!-- GUILDA -> MEMBRO_GUILDA -->
-    <path class="relationship" d="M250,375 L650,375"/>
-    <text class="text" x="450" y="365">tem</text>
+    <path class="relationship" d="M300,470 H900"/>
+    <text class="text" x="600" y="450">tem</text>
   </g>
 </svg> 
