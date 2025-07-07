@@ -144,7 +144,7 @@ $niveisDificuldade = listarNiveisDificuldade();
 
                         <!-- Botões -->
                         <div class="d-flex justify-content-between">
-                            <a href="/views/exercicios/biblioteca.php" class="btn btn-outline-secondary">Cancelar</a>
+                            <a href="/GymForge-Academic/views/exercicios/biblioteca.php" class="btn btn-outline-secondary">Cancelar</a>
                             <button type="submit" class="btn btn-primary">
                                 <?php echo $id ? 'Atualizar' : 'Criar'; ?> Exercício
                             </button>

@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../includes/training_functions.php';
 require_once __DIR__ . '/../../includes/exercise_functions.php';
 
 // Verifica se o usuário está logado
-if (!esta_logado()) {
+if (!estaLogado()) {
     header('Location: /forms/usuario/login.php');
     exit;
 }
@@ -177,7 +177,7 @@ require_once __DIR__ . '/../../includes/header.php';
         <button type="button" class="btn btn-secondary mb-4" id="adicionar-exercicio">+ Adicionar Exercício</button>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="/views/treinos/" class="btn btn-outline-secondary me-2">Cancelar</a>
+            <a href="/GymForge-Academic/views/treinos/" class="btn btn-outline-secondary me-2">Cancelar</a>
             <button type="submit" class="btn btn-primary">Salvar Treino</button>
         </div>
     </form>

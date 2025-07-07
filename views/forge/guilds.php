@@ -67,7 +67,7 @@ try {
         GROUP BY g.id
     ");
     $stmt->execute([$status['character']['id']]);
-    $my_guild_as_leader = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    $my_guild_as_leader = $stmt->fetch() ?: null;
 
     // Verificar se o usuário é membro de alguma guilda
     $stmt = $conn->prepare("
@@ -93,7 +93,7 @@ try {
         GROUP BY g.id
     ");
     $stmt->execute([$status['character']['id']]);
-    $my_guild_membership = $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    $my_guild_membership = $stmt->fetch() ?: null;
 
     // Verificar solicitações pendentes do usuário
     $stmt = $conn->prepare("
@@ -194,14 +194,14 @@ $guild_config = [
                         <i class="fas fa-cog"></i> Gerenciar Guilda
                     </button>
                     <?php if (isset($my_guild_membership['pending_requests']) && $my_guild_membership['pending_requests'] > 0): ?>
-                    <a href="/views/forge/guild_requests.php" class="view-requests-btn">
+                    <a href="/GymForge-Academic/views/forge/guild_requests.php" class="view-requests-btn">
                         <i class="fas fa-user-plus"></i>
                         <?php echo $my_guild_membership['pending_requests']; ?> solicitações
                     </a>
                     <?php endif; ?>
                 </div>
                 <?php elseif (isset($my_guild_membership['role']) && $my_guild_membership['role'] === 'officer' && isset($my_guild_membership['pending_requests']) && $my_guild_membership['pending_requests'] > 0): ?>
-                <a href="/views/forge/guild_requests.php" class="view-requests-btn">
+                <a href="/GymForge-Academic/views/forge/guild_requests.php" class="view-requests-btn">
                     <i class="fas fa-user-plus"></i>
                     <?php echo $my_guild_membership['pending_requests']; ?> solicitações
                 </a>

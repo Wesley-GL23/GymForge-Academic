@@ -42,7 +42,7 @@ $isAdmin = isset($_SESSION['user_level']) && $_SESSION['user_level'] === 'admin'
 
                     <?php if ($isAdmin): ?>
                     <div class="admin-controls mb-4">
-                        <a href="/forms/exercicio/form.php" class="btn btn-primary">
+                        <a href="/GymForge-Academic/forms/exercicio/form.php" class="btn btn-primary">
                             <i class="fas fa-plus"></i> Novo Exercício
                         </a>
                     </div>
@@ -157,7 +157,7 @@ $isAdmin = isset($_SESSION['user_level']) && $_SESSION['user_level'] === 'admin'
                             </button>
                             <?php if ($isAdmin): ?>
                             <div class="admin-controls">
-                                <a href="/forms/exercicio/form.php?id=<?php echo $exercicio['id']; ?>" class="btn btn-warning btn-sm">
+                                <a href="/GymForge-Academic/forms/exercicio/form.php?id=<?php echo $exercicio['id']; ?>" class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <button class="btn btn-danger btn-sm" onclick="deleteExercise(<?php echo $exercicio['id']; ?>)">
@@ -226,7 +226,7 @@ $isAdmin = isset($_SESSION['user_level']) && $_SESSION['user_level'] === 'admin'
                             <div class="modal-footer border-0">
                                 <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Fechar</button>
                                 <?php if ($isAdmin): ?>
-                                <a href="/forms/exercicio/form.php?id=<?php echo $exercicio['id']; ?>" class="btn btn-warning">
+                                <a href="/GymForge-Academic/forms/exercicio/form.php?id=<?php echo $exercicio['id']; ?>" class="btn btn-warning">
                                     Editar
                                 </a>
                                 <?php endif; ?>

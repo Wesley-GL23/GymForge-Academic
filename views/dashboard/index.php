@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../includes/training_functions.php';
 require_once __DIR__ . '/../../includes/exercise_functions.php';
 
 // Verifica se o usuário está logado
-if (!esta_logado()) {
+if (!estaLogado()) {
     header('Location: /forms/usuario/login.php');
     exit;
 }
@@ -17,7 +17,7 @@ $nivel = $_SESSION['nivel'];
 $treinos_ativos = listar_treinos($usuario_id, 'ativo', 3);
 
 // Busca últimos exercícios adicionados
-$ultimos_exercicios = listar_exercicios(null, 5);
+listar_exercicios();
 
 $titulo = "Dashboard";
 require_once __DIR__ . '/../../includes/header.php';
@@ -27,33 +27,36 @@ require_once __DIR__ . '/../../includes/header.php';
     <!-- Sidebar -->
     <nav class="dashboard-sidebar">
         <div class="sidebar-header">
-            <img src="/assets/img/logo_small.png" alt="GymForge" class="sidebar-logo">
+            <a href="/GymForge-Academic/" class="sidebar-home-link">
+                <img src="/assets/img/logo_small.png" alt="GymForge" class="sidebar-logo" style="width:40px;height:40px;object-fit:contain;">
+            </a>
             <h3>GymForge</h3>
         </div>
 
-        <ul class="sidebar-nav">
+        <ul class="sidebar-menu">
+            <li><a href="/GymForge-Academic/" class="sidebar-link"><i class="fas fa-home me-2"></i>Página Inicial</a></li>
             <li class="active">
-                <a href="/views/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="/GymForge-Academic/views/dashboard/"><i class="fas fa-home"></i> Dashboard</a>
             </li>
             <li>
-                <a href="/views/treinos/"><i class="fas fa-dumbbell"></i> Meus Treinos</a>
+                <a href="/GymForge-Academic/views/treinos/"><i class="fas fa-dumbbell"></i> Meus Treinos</a>
             </li>
             <li>
-                <a href="/views/exercicios/biblioteca.php"><i class="fas fa-book"></i> Biblioteca de Exercícios</a>
+                <a href="/GymForge-Academic/views/exercicios/biblioteca.php"><i class="fas fa-book"></i> Biblioteca de Exercícios</a>
             </li>
             <li>
-                <a href="/views/forge/character.php"><i class="fas fa-user-ninja"></i> Meu Personagem</a>
+                <a href="/GymForge-Academic/views/forge/character.php"><i class="fas fa-user-ninja"></i> Meu Personagem</a>
             </li>
             <li>
-                <a href="/views/forge/guilds.php"><i class="fas fa-users"></i> Guildas</a>
+                <a href="/GymForge-Academic/views/forge/guilds.php"><i class="fas fa-users"></i> Guildas</a>
             </li>
             <?php if ($nivel === 'admin'): ?>
             <li class="nav-header">Administração</li>
             <li>
-                <a href="/views/admin/exercicios.php"><i class="fas fa-cog"></i> Gerenciar Exercícios</a>
+                <a href="/GymForge-Academic/views/admin/exercicios.php"><i class="fas fa-cog"></i> Gerenciar Exercícios</a>
             </li>
             <li>
-                <a href="/views/admin/usuarios.php"><i class="fas fa-users-cog"></i> Gerenciar Usuários</a>
+                <a href="/GymForge-Academic/views/admin/usuarios.php"><i class="fas fa-users-cog"></i> Gerenciar Usuários</a>
             </li>
             <?php endif; ?>
         </ul>
@@ -67,7 +70,7 @@ require_once __DIR__ . '/../../includes/header.php';
                 <p>Continue sua jornada de transformação</p>
             </div>
             <div class="header-actions">
-                <a href="/forms/treino/form.php" class="btn btn-primary">
+                <a href="/GymForge-Academic/forms/treino/form.php" class="btn btn-primary">
                     <i class="fas fa-plus"></i> Novo Treino
                 </a>
             </div>
@@ -78,18 +81,18 @@ require_once __DIR__ . '/../../includes/header.php';
             <div class="dashboard-card">
                 <div class="card-header">
                     <h3>Treinos Ativos</h3>
-                    <a href="/views/treinos/" class="btn btn-sm btn-outline-primary">Ver Todos</a>
+                    <a href="/GymForge-Academic/views/treinos/" class="btn btn-sm btn-outline-primary">Ver Todos</a>
                 </div>
                 <div class="card-body">
                     <?php if (empty($treinos_ativos)): ?>
                         <p class="text-muted">Nenhum treino ativo no momento.</p>
-                        <a href="/forms/treino/form.php" class="btn btn-primary btn-sm">
+                        <a href="/GymForge-Academic/forms/treino/form.php" class="btn btn-primary btn-sm">
                             Criar Meu Primeiro Treino
                         </a>
                     <?php else: ?>
                         <div class="list-group">
                             <?php foreach ($treinos_ativos as $treino): ?>
-                                <a href="/views/treinos/visualizar.php?id=<?php echo $treino['id']; ?>" 
+                                <a href="/GymForge-Academic/views/treinos/visualizar.php?id=<?php echo $treino['id']; ?>" 
                                    class="list-group-item list-group-item-action">
                                     <div class="d-flex w-100 justify-content-between">
                                         <h5 class="mb-1"><?php echo htmlspecialchars($treino['nome']); ?></h5>
@@ -107,7 +110,7 @@ require_once __DIR__ . '/../../includes/header.php';
             <div class="dashboard-card">
                 <div class="card-header">
                     <h3>Últimos Exercícios</h3>
-                    <a href="/views/exercicios/biblioteca.php" class="btn btn-sm btn-outline-primary">Ver Biblioteca</a>
+                    <a href="/GymForge-Academic/views/exercicios/biblioteca.php" class="btn btn-sm btn-outline-primary">Ver Biblioteca</a>
                 </div>
                 <div class="card-body">
                     <div class="row row-cols-1 row-cols-md-2 g-4">
@@ -136,7 +139,7 @@ require_once __DIR__ . '/../../includes/header.php';
             <div class="dashboard-card forge-card">
                 <div class="card-header">
                     <h3>Sistema Forge</h3>
-                    <a href="/views/forge/character.php" class="btn btn-sm btn-outline-primary">Meu Personagem</a>
+                    <a href="/GymForge-Academic/views/forge/character.php" class="btn btn-sm btn-outline-primary">Meu Personagem</a>
                 </div>
                 <div class="card-body">
                     <div class="forge-stats">
@@ -157,10 +160,10 @@ require_once __DIR__ . '/../../includes/header.php';
                         </div>
                     </div>
                     <div class="forge-actions mt-4">
-                        <a href="/views/forge/guilds.php" class="btn btn-outline-primary btn-sm">
+                        <a href="/GymForge-Academic/views/forge/guilds.php" class="btn btn-outline-primary btn-sm">
                             <i class="fas fa-search"></i> Procurar Guilda
                         </a>
-                        <a href="/views/forge/events.php" class="btn btn-outline-primary btn-sm">
+                        <a href="/GymForge-Academic/views/forge/events.php" class="btn btn-outline-primary btn-sm">
                             <i class="fas fa-calendar"></i> Eventos
                         </a>
                     </div>

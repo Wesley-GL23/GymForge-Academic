@@ -55,248 +55,153 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $titulo; ?> - GymForge</title>
+    <title>GymForge - <?php echo $titulo ?? 'Forjando sua melhor versão'; ?></title>
     
-    <!-- Meta Tags SEO -->
-    <meta name="description" content="<?php echo isset($page_description) ? $page_description : 'GymForge - Plataforma completa para gerenciamento de academias e acompanhamento de treinos. Transforme sua jornada fitness.'; ?>">
-    <meta name="keywords" content="academia, treinos, exercícios, fitness, saúde, GymForge">
+    <!-- Meta Tags -->
+    <meta name="description" content="GymForge - Plataforma de treinos personalizados com gamificação. Transforme seu corpo e mente com treinos eficientes e divertidos.">
+    <meta name="keywords" content="academia, treino, exercícios, fitness, musculação, gamificação">
     <meta name="author" content="GymForge">
+    <meta name="theme-color" content="#FF6B00">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<?php echo BASE_URL; ?>">
+    <meta property="og:title" content="GymForge - <?php echo $titulo ?? 'Forjando sua melhor versão'; ?>">
+    <meta property="og:description" content="Transforme seu corpo e mente com o GymForge. Treinos personalizados e gamificação para sua evolução.">
+    <meta property="og:image" content="<?php echo BASE_URL; ?>assets/img/gymforge-badge.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="<?php echo BASE_URL; ?>">
+    <meta property="twitter:title" content="GymForge - <?php echo $titulo ?? 'Forjando sua melhor versão'; ?>">
+    <meta property="twitter:description" content="Transforme seu corpo e mente com o GymForge. Treinos personalizados e gamificação para sua evolução.">
+    <meta property="twitter:image" content="<?php echo BASE_URL; ?>assets/img/gymforge-badge.png">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo BASE_URL; ?>assets/img/gymforge-badge.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo BASE_URL; ?>assets/img/gymforge-badge.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo BASE_URL; ?>assets/img/gymforge-badge.png">
-    <link rel="manifest" href="<?php echo BASE_URL; ?>site.webmanifest">
-    <meta name="theme-color" content="#1A1A1A">
+    <link rel="apple-touch-icon" sizes="180x180" href="/GymForge-Academic/assets/img/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/GymForge-Academic/assets/img/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/GymForge-Academic/assets/img/favicon.png">
+    <link rel="manifest" href="/GymForge-Academic/site.webmanifest">
     
-    <!-- Open Graph -->
-    <meta property="og:title" content="<?php echo isset($page_title) ? $page_title . ' - ' : ''; ?>GymForge">
-    <meta property="og:description" content="<?php echo isset($page_description) ? $page_description : 'Transforme sua jornada fitness com o GymForge.'; ?>">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="<?php echo $_SERVER['REQUEST_URI']; ?>">
-    <meta property="og:image" content="<?php echo BASE_URL; ?>assets/img/gymforge-logo.jpeg">
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    
+    <!-- Fontes -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
     
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="<?php echo BASE_URL; ?>assets/css/forge.css" rel="stylesheet">
-    <link href="<?php echo BASE_URL; ?>assets/css/style.css" rel="stylesheet">
-    
-    <!-- Preload de fontes críticas -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "GymForge",
-        "description": "Plataforma completa para gerenciamento de academias e acompanhamento de treinos",
-        "url": "<?php echo BASE_URL; ?>",
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": "<?php echo BASE_URL; ?>search?q={search_term_string}",
-            "query-input": "required name=search_term_string"
-        }
-    }
-    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <link rel="stylesheet" href="/GymForge-Academic/assets/css/gymforge.css">
 </head>
 <body class="<?php echo isset($body_class) ? $body_class : ''; ?>">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark forge-navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark glass-effect fixed-top">
         <div class="container">
-            <a class="navbar-brand forge-brand" href="<?php echo BASE_URL; ?>">
-                <div class="brand-logo">
-                    <img src="<?php echo BASE_URL; ?>assets/img/logo.png" alt="GymForge" class="brand-image">
-                </div>
-                <span class="brand-text">GymForge</span>
+            <a class="navbar-brand" href="/GymForge-Academic/" data-aos="fade-right">
+                <img src="/GymForge-Academic/assets/img/logo-white.png" alt="GymForge" height="40" class="d-inline-block align-text-top">
             </a>
             
-            <button class="navbar-toggler forge-button" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars text-forge-accent"></i>
             </button>
             
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link forge-nav-link <?php echo $current_page === 'index' ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>">
-                            <i class="bi bi-house-door"></i>
-                            <span>Início</span>
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item" data-aos="fade-down" data-aos-delay="100">
+                        <a class="nav-link <?php echo $current_page === 'dashboard' ? 'active' : ''; ?>" href="/GymForge-Academic/views/dashboard/">
+                            <i class="fas fa-chart-line me-2"></i>Dashboard
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link forge-nav-link <?php echo $current_page === 'biblioteca' ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>views/exercicios/biblioteca.php">
-                            <i class="bi bi-journal-text"></i>
-                            <span>Exercícios</span>
+                    <li class="nav-item" data-aos="fade-down" data-aos-delay="200">
+                        <a class="nav-link <?php echo $current_page === 'biblioteca' ? 'active' : ''; ?>" href="/GymForge-Academic/views/exercicios/biblioteca.php">
+                            <i class="fas fa-dumbbell me-2"></i>Exercícios
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link forge-nav-link <?php echo $current_page === 'treinos' ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>views/treinos/">
-                            <i class="bi bi-lightning-charge"></i>
-                            <span>Treinos</span>
+                    <li class="nav-item" data-aos="fade-down" data-aos-delay="300">
+                        <a class="nav-link <?php echo $current_page === 'treinos' ? 'active' : ''; ?>" href="/GymForge-Academic/views/treinos/">
+                            <i class="fas fa-running me-2"></i>Meus Treinos
                         </a>
                     </li>
-                    <?php if ($is_logged): ?>
-                    <li class="nav-item">
-                        <a class="nav-link forge-nav-link <?php echo $current_page === 'character' ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>views/forge/character.php">
-                            <i class="bi bi-person-badge"></i>
-                            <span>Meu Personagem</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link forge-nav-link <?php echo $current_page === 'guilds' ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>views/forge/guilds.php">
-                            <i class="bi bi-people"></i>
-                            <span>Guildas</span>
+                    <?php if (estaLogado() && isset($_SESSION['admin']) && $_SESSION['admin']): ?>
+                    <li class="nav-item" data-aos="fade-down" data-aos-delay="400">
+                        <a class="nav-link <?php echo $current_page === 'admin' ? 'active' : ''; ?>" href="/GymForge-Academic/views/admin/">
+                            <i class="fas fa-shield-alt me-2"></i>Admin
                         </a>
                     </li>
                     <?php endif; ?>
                 </ul>
                 
-                <ul class="navbar-nav">
-                    <?php if ($is_logged): ?>
-                        <?php if ($user_level === 'admin'): ?>
-                        <li class="nav-item">
-                            <a class="nav-link forge-nav-link" href="<?php echo BASE_URL; ?>views/admin/">
-                                <i class="bi bi-gear"></i>
-                                <span>Admin</span>
-                            </a>
-                        </li>
-                        <?php endif; ?>
-                        
-                        <li class="nav-item dropdown">
-                            <a class="nav-link forge-nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-                                <div class="user-avatar">
-                                    <i class="bi bi-person-circle"></i>
-                                </div>
-                                <span class="d-none d-lg-inline"><?php echo $usuario_atual['nome']; ?></span>
-                            </a>
-                            <ul class="dropdown-menu forge-dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" href="<?php echo BASE_URL; ?>views/dashboard/">
-                                        <i class="bi bi-speedometer2"></i>
-                                        <span>Dashboard</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="<?php echo BASE_URL; ?>views/perfil/">
-                                        <i class="bi bi-person"></i>
-                                        <span>Meu Perfil</span>
-                                    </a>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item text-danger" href="<?php echo BASE_URL; ?>actions/usuario/logout.php">
-                                        <i class="bi bi-box-arrow-right"></i>
-                                        <span>Sair</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    <?php else: ?>
-                        <li class="nav-item">
-                            <a class="forge-button forge-button--secondary me-2" href="<?php echo BASE_URL; ?>forms/usuario/login.php">
-                                <i class="bi bi-box-arrow-in-right"></i>
-                                <span>Entrar</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="forge-button forge-button--primary" href="<?php echo BASE_URL; ?>forms/usuario/cadastro.php">
-                                <i class="bi bi-person-plus"></i>
-                                <span>Cadastrar</span>
-                            </a>
-                        </li>
-                    <?php endif; ?>
-                </ul>
+                <?php if (estaLogado()): ?>
+                <div class="d-flex align-items-center" data-aos="fade-left">
+                    <div class="dropdown">
+                        <button class="btn btn-link dropdown-toggle text-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle fa-lg text-forge-accent me-2"></i>
+                            <span class="text-forge-accent"><?php echo $_SESSION['nome'] ?? 'Usuário'; ?></span>
+                            <?php if (isset($_SESSION['nivel'])): ?>
+                            <span class="badge bg-forge-accent text-dark ms-2">Nível <?php echo $_SESSION['nivel']; ?></span>
+                            <?php endif; ?>
+                        </button>
+                        <ul class="dropdown-menu glass-effect-light dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item text-white" href="/GymForge-Academic/views/perfil/">
+                                    <i class="fas fa-user me-2"></i>Meu Perfil
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-white" href="/GymForge-Academic/views/configuracoes/">
+                                    <i class="fas fa-cog me-2"></i>Configurações
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item text-forge-accent" href="/GymForge-Academic/actions/usuario/logout.php">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Sair
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <?php else: ?>
+                <div class="d-flex gap-2" data-aos="fade-left">
+                    <a href="/GymForge-Academic/login.php" class="btn btn-outline-accent">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                    </a>
+                    <a href="/GymForge-Academic/cadastro.php" class="btn btn-primary forge-glow">
+                        <i class="fas fa-user-plus me-2"></i>Cadastre-se
+                    </a>
+                </div>
+                <?php endif; ?>
             </div>
         </div>
     </nav>
 
-    <?php if (isset($_SESSION['mensagem'])): ?>
-    <div class="alert forge-alert alert-<?php echo $_SESSION['mensagem']['tipo']; ?> alert-dismissible fade show" role="alert">
-        <div class="alert-icon">
-            <?php
-            $icon = 'info-circle';
-            switch ($_SESSION['mensagem']['tipo']) {
-                case 'success':
-                    $icon = 'check-circle';
-                    break;
-                case 'danger':
-                    $icon = 'exclamation-circle';
-                    break;
-                case 'warning':
-                    $icon = 'exclamation-triangle';
-                    break;
-            }
+    <!-- Flash Messages -->
+    <div class="flash-messages-container">
+        <?php if (isset($_SESSION['sucesso'])): ?>
+        <div class="alert alert-success fade-in glass-effect-light" role="alert" data-aos="fade-down">
+            <i class="fas fa-check-circle me-2"></i>
+            <?php 
+            echo $_SESSION['sucesso'];
+            unset($_SESSION['sucesso']);
             ?>
-            <i class="bi bi-<?php echo $icon; ?>"></i>
         </div>
-        <div class="alert-content">
-            <?php echo $_SESSION['mensagem']['texto']; ?>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['erro'])): ?>
+        <div class="alert alert-danger fade-in glass-effect-light" role="alert" data-aos="fade-down">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <?php 
+            echo $_SESSION['erro'];
+            unset($_SESSION['erro']);
+            ?>
         </div>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <?php endif; ?>
     </div>
-    <?php unset($_SESSION['mensagem']); endif; ?>
-
-    <!-- Espaçamento para navbar fixa -->
-    <div class="forge-navbar-spacer"></div>
-    
-    <!-- Modais de Login/Registro -->
-    <?php if (!isset($_SESSION['user_id'])): ?>
-        <!-- Modal de Login -->
-        <div class="modal fade forge-modal" id="loginModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">
-                            <i class="bi bi-box-arrow-in-right text-primary me-2"></i>
-                            Entrar no GymForge
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form data-validate>
-                            <div class="mb-3">
-                                <label class="form-label" for="loginEmail">Email</label>
-                                <input type="email" class="forge-input" id="loginEmail" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="loginPassword">Senha</label>
-                                <div class="input-group">
-                                    <input type="password" class="forge-input" id="loginPassword" required>
-                                    <button type="button" class="forge-button forge-button--secondary" onclick="togglePassword('loginPassword')">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="rememberMe">
-                                <label class="form-check-label" for="rememberMe">Lembrar de mim</label>
-                            </div>
-                            <div class="d-grid">
-                                <button type="submit" class="forge-button forge-button--primary">
-                                    <i class="bi bi-box-arrow-in-right"></i>
-                                    <span>Entrar</span>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php endif; ?>
-
-    <script>
-    function togglePassword(inputId) {
-        const input = document.getElementById(inputId);
-        const type = input.type === 'password' ? 'text' : 'password';
-        input.type = type;
-        
-        const icon = input.nextElementSibling.querySelector('i');
-        icon.classList.toggle('bi-eye');
-        icon.classList.toggle('bi-eye-slash');
-    }
-    </script>
 
     <!-- Main Container -->
     <main class="forge-main">

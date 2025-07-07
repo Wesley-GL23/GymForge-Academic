@@ -1,7 +1,7 @@
 ﻿<?php
+require_once __DIR__ . '/../../includes/exercise_functions.php';
 require_once '../../includes/header.php';
 require_once '../../includes/auth_functions.php';
-require_once '../../includes/exercise_functions.php';
 
 // Verifica se o usuário está logado e é admin
 requireAdmin();
@@ -10,7 +10,7 @@ requireAdmin();
 $id = $_GET['id'] ?? 0;
 $exercicio = null;
 if ($id) {
-    $exercicio = buscarExercicio($id);
+    $exercicio = buscar_exercicio($id);
     if (!$exercicio) {
         header('Location: /views/exercicios/biblioteca.php');
         exit;
@@ -132,7 +132,7 @@ $niveisDificuldade = listarNiveisDificuldade();
 
                         <!-- Botões -->
                         <div class="d-flex justify-content-between">
-                            <a href="/views/exercicios/biblioteca.php" class="btn btn-outline-secondary">Cancelar</a>
+                            <a href="/GymForge-Academic/views/exercicios/biblioteca.php" class="btn btn-outline-secondary">Cancelar</a>
                             <button type="submit" class="btn btn-primary">
                                 <?php echo $id ? 'Atualizar' : 'Criar'; ?> Exercício
                             </button>

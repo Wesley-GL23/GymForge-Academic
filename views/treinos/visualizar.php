@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../includes/auth_functions.php';
 require_once __DIR__ . '/../../includes/training_functions.php';
 
 // Verifica se o usuário está logado
-if (!esta_logado()) {
+if (!estaLogado()) {
     header('Location: /forms/usuario/login.php');
     exit;
 }
@@ -32,7 +32,7 @@ require_once __DIR__ . '/../../includes/header.php';
         <h1><?php echo htmlspecialchars($treino['nome']); ?></h1>
         
         <div class="btn-group">
-            <a href="/forms/treino/form.php?id=<?php echo $treino['id']; ?>" class="btn btn-primary">
+            <a href="/GymForge-Academic/forms/treino/form.php?id=<?php echo $treino['id']; ?>" class="btn btn-primary">
                 <i class="fas fa-edit"></i> Editar Treino
             </a>
             <button type="button" class="btn btn-danger" onclick="confirmarExclusao(<?php echo $treino['id']; ?>)">
@@ -113,7 +113,7 @@ require_once __DIR__ . '/../../includes/header.php';
     <?php if (empty($treino['exercicios'])): ?>
         <div class="alert alert-info">
             Este treino ainda não possui exercícios cadastrados.
-            <a href="/forms/treino/form.php?id=<?php echo $treino['id']; ?>" class="alert-link">
+            <a href="/GymForge-Academic/forms/treino/form.php?id=<?php echo $treino['id']; ?>" class="alert-link">
                 Adicionar exercícios
             </a>
         </div>

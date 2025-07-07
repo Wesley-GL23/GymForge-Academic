@@ -1,154 +1,148 @@
     </main>
 
-    <!-- Footer Profissional -->
-    <footer class="footer">
+    <!-- Footer -->
+    <footer class="glass-effect py-5 mt-5">
         <div class="container">
-            <div class="row">
-                <!-- Coluna 1: Sobre -->
-                <div class="col-lg-4 col-md-6 footer-section">
-                    <div class="d-flex align-items-center mb-3">
-                        <i class="bi bi-lightning-charge-fill text-accent fs-3 me-2"></i>
-                        <h5 class="mb-0">GYMFORGE</h5>
-                    </div>
-                    <p class="text-muted mb-4">
-                        Transforme sua jornada fitness com a plataforma mais completa para gerenciamento de academias e acompanhamento de treinos. Forjando sua melhor versão desde 2024.
-                    </p>
-                    <div class="social-links">
-                        <a href="#" class="me-3" data-tooltip="Siga-nos no Facebook">
-                            <i class="bi bi-facebook fs-5"></i>
-                        </a>
-                        <a href="#" class="me-3" data-tooltip="Siga-nos no Instagram">
-                            <i class="bi bi-instagram fs-5"></i>
-                        </a>
-                        <a href="#" class="me-3" data-tooltip="Siga-nos no Twitter">
-                            <i class="bi bi-twitter fs-5"></i>
-                        </a>
-                        <a href="#" class="me-3" data-tooltip="Siga-nos no YouTube">
-                            <i class="bi bi-youtube fs-5"></i>
-                        </a>
-                        <a href="#" data-tooltip="Siga-nos no LinkedIn">
-                            <i class="bi bi-linkedin fs-5"></i>
-                        </a>
+            <div class="row g-4">
+                <div class="col-lg-4" data-aos="fade-up">
+                    <h5 class="text-forge-accent mb-4">SOBRE O GYMFORGE</h5>
+                    <p class="text-white">Transforme sua jornada fitness com nossa plataforma inovadora que combina treinos personalizados, acompanhamento profissional e gamificação.</p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="me-3 text-forge-accent hover-effect"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="me-3 text-forge-accent hover-effect"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="me-3 text-forge-accent hover-effect"><i class="fab fa-youtube fa-lg"></i></a>
+                        <a href="#" class="text-forge-accent hover-effect"><i class="fab fa-linkedin fa-lg"></i></a>
                     </div>
                 </div>
-                
-                <!-- Coluna 2: Links Rápidos -->
-                <div class="col-lg-2 col-md-6 footer-section">
-                    <h6 class="footer-title">Links Rápidos</h6>
-                    <ul class="footer-links">
-                        <li><a href="<?php echo BASE_URL; ?>">Início</a></li>
-                        <li><a href="<?php echo BASE_URL; ?>exercises.php">Exercícios</a></li>
-                        <li><a href="<?php echo BASE_URL; ?>workouts.php">Treinos</a></li>
-                        <li><a href="<?php echo BASE_URL; ?>about.php">Sobre Nós</a></li>
-                        <li><a href="<?php echo BASE_URL; ?>contact.php">Contato</a></li>
-                        <li><a href="<?php echo BASE_URL; ?>blog.php">Blog</a></li>
+                <div class="col-lg-2" data-aos="fade-up" data-aos-delay="100">
+                    <h5 class="text-forge-accent mb-4">LINKS RÁPIDOS</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="/GymForge-Academic/views/exercicios/biblioteca.php" class="text-white text-decoration-none hover-effect">
+                                <i class="fas fa-dumbbell me-2 text-forge-accent"></i>Exercícios
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="/GymForge-Academic/views/treinos/" class="text-white text-decoration-none hover-effect">
+                                <i class="fas fa-running me-2 text-forge-accent"></i>Treinos
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="/GymForge-Academic/views/perfil/" class="text-white text-decoration-none hover-effect">
+                                <i class="fas fa-user me-2 text-forge-accent"></i>Meu Perfil
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="/GymForge-Academic/views/configuracoes/" class="text-white text-decoration-none hover-effect">
+                                <i class="fas fa-cog me-2 text-forge-accent"></i>Configurações
+                            </a>
+                        </li>
                     </ul>
                 </div>
-                
-                <!-- Coluna 3: Recursos -->
-                <div class="col-lg-2 col-md-6 footer-section">
-                    <h6 class="footer-title">Recursos</h6>
-                    <ul class="footer-links">
-                        <li><a href="<?php echo BASE_URL; ?>help.php">Central de Ajuda</a></li>
-                        <li><a href="<?php echo BASE_URL; ?>tutorials.php">Tutoriais</a></li>
-                        <li><a href="<?php echo BASE_URL; ?>api.php">API</a></li>
-                        <li><a href="<?php echo BASE_URL; ?>integrations.php">Integrações</a></li>
-                        <li><a href="<?php echo BASE_URL; ?>partners.php">Parceiros</a></li>
-                        <li><a href="<?php echo BASE_URL; ?>developers.php">Desenvolvedores</a></li>
+                <div class="col-lg-2" data-aos="fade-up" data-aos-delay="200">
+                    <h5 class="text-forge-accent mb-4">SUPORTE</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="/GymForge-Academic/views/ajuda/" class="text-white text-decoration-none hover-effect">
+                                <i class="fas fa-question-circle me-2 text-forge-accent"></i>Central de Ajuda
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="/GymForge-Academic/views/contato/" class="text-white text-decoration-none hover-effect">
+                                <i class="fas fa-envelope me-2 text-forge-accent"></i>Contato
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="/GymForge-Academic/views/faq/" class="text-white text-decoration-none hover-effect">
+                                <i class="fas fa-info-circle me-2 text-forge-accent"></i>FAQ
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="/GymForge-Academic/views/feedback/" class="text-white text-decoration-none hover-effect">
+                                <i class="fas fa-comment me-2 text-forge-accent"></i>Feedback
+                            </a>
+                        </li>
                     </ul>
                 </div>
-                
-                <!-- Coluna 4: Suporte e Contato -->
-                <div class="col-lg-4 col-md-6 footer-section">
-                    <h6 class="footer-title">Suporte & Contato</h6>
-                    <div class="contact-info mb-4">
-                        <div class="d-flex align-items-center mb-2">
-                            <i class="bi bi-envelope text-accent me-2"></i>
-                            <span>gymforge.team@gmail.com</span>
-                        </div>
-                        <div class="d-flex align-items-center mb-2">
-                            <i class="bi bi-telephone text-accent me-2"></i>
-                            <span>+55 (42) 991189188</span>
-                        </div>
-                        <div class="d-flex align-items-center mb-2">
-                            <i class="bi bi-geo-alt text-accent me-2"></i>
-                            <span>Telêmaco Borba, PR - Brasil</span>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <i class="bi bi-clock text-accent me-2"></i>
-                            <span>Seg-Sex: 8h às 18h</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Newsletter -->
-                    <div class="newsletter">
-                        <h6 class="mb-3">Newsletter</h6>
-                        <p class="text-muted small mb-3">Receba dicas de fitness e novidades do GymForge</p>
-                        <form class="d-flex">
-                            <input type="email" class="form-control me-2" placeholder="Seu email" required>
-                            <button type="submit" class="btn btn-accent">
-                                <i class="bi bi-send"></i>
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                    <h5 class="text-forge-accent mb-4">NEWSLETTER</h5>
+                    <p class="text-white">Receba dicas, novidades e conteúdo exclusivo.</p>
+                    <form class="mt-3 newsletter-form">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control bg-transparent text-white" placeholder="Seu e-mail" required>
+                            <button class="btn btn-accent hover-effect" type="submit">
+                                <i class="fas fa-paper-plane me-2"></i>Inscrever
                             </button>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-            
-            <!-- Linha de Separação -->
-            <hr class="my-4" style="border-color: rgba(255, 255, 255, 0.1);">
-            
-            <!-- Footer Bottom -->
-            <div class="footer-bottom">
-                <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <p class="mb-0 text-muted">
-                            &copy; 2025 GymForge. Todos os direitos reservados.
-                        </p>
-                    </div>
-                    <div class="col-md-6 text-md-end">
-                        <ul class="list-inline mb-0">
-                            <li class="list-inline-item">
-                                <a href="<?php echo BASE_URL; ?>privacy.php" class="text-muted text-decoration-none">Privacidade</a>
-                            </li>
-                            <li class="list-inline-item">
-                                <span class="text-muted">•</span>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="<?php echo BASE_URL; ?>terms.php" class="text-muted text-decoration-none">Termos de Uso</a>
-                            </li>
-                            <li class="list-inline-item">
-                                <span class="text-muted">•</span>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="<?php echo BASE_URL; ?>cookies.php" class="text-muted text-decoration-none">Cookies</a>
-                            </li>
-                        </ul>
-                    </div>
+            <hr class="my-4 border-forge-accent">
+            <div class="row align-items-center">
+                <div class="col-md-6" data-aos="fade-right">
+                    <p class="mb-md-0 text-white">&copy; <?php echo date('Y'); ?> GymForge. Todos os direitos reservados.</p>
+                </div>
+                <div class="col-md-6 text-md-end" data-aos="fade-left">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item">
+                            <a href="/GymForge-Academic/views/privacidade/" class="text-white text-decoration-none hover-effect">
+                                <i class="fas fa-shield-alt me-1 text-forge-accent"></i>Privacidade
+                            </a>
+                        </li>
+                        <li class="list-inline-item mx-3">
+                            <a href="/GymForge-Academic/views/termos/" class="text-white text-decoration-none hover-effect">
+                                <i class="fas fa-file-contract me-1 text-forge-accent"></i>Termos de Uso
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="/GymForge-Academic/views/cookies/" class="text-white text-decoration-none hover-effect">
+                                <i class="fas fa-cookie-bite me-1 text-forge-accent"></i>Cookies
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </footer>
     
     <!-- Botão Voltar ao Topo -->
-    <button id="backToTop" class="btn btn-primary position-fixed" style="bottom: 20px; right: 20px; z-index: 1000; display: none; border-radius: 50%; width: 50px; height: 50px;">
-        <i class="bi bi-arrow-up"></i>
+    <button id="backToTop" class="btn btn-primary position-fixed forge-glow" 
+        style="bottom: 20px; right: 20px; z-index: 1000; display: none; border-radius: 50%; width: 50px; height: 50px;">
+        <i class="fas fa-chevron-up"></i>
     </button>
     
     <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     
-    <!-- Scripts Adicionais -->
+    <!-- GymForge JS -->
+    <script src="/GymForge-Academic/assets/js/gymforge.js"></script>
+    
+    <!-- Scripts de Inicialização -->
     <script>
+        // Inicializar AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
         // Botão Voltar ao Topo
         const backToTopBtn = document.getElementById('backToTop');
         
         window.addEventListener('scroll', function() {
             if (window.pageYOffset > 300) {
                 backToTopBtn.style.display = 'block';
+                backToTopBtn.classList.add('fade-in');
             } else {
-                backToTopBtn.style.display = 'none';
+                backToTopBtn.classList.remove('fade-in');
+                setTimeout(() => {
+                    if (window.pageYOffset <= 300) {
+                        backToTopBtn.style.display = 'none';
+                    }
+                }, 300);
             }
         });
         
@@ -160,16 +154,12 @@
         });
         
         // Ativar tooltips do Bootstrap
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
         
         // Ativar popovers do Bootstrap
-        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-            return new bootstrap.Popover(popoverTriggerEl);
-        });
+        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+        const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 
         // Inicializar Typed.js
         if (document.querySelector('.hero-dynamic-text')) {
@@ -184,7 +174,7 @@
             });
         }
 
-        // Navbar Scroll
+        // Navbar Scroll Effect
         window.addEventListener('scroll', function() {
             const navbar = document.querySelector('.navbar');
             if (window.scrollY > 50) {
@@ -193,15 +183,27 @@
                 navbar.classList.remove('scrolled');
             }
         });
-    </script>
-    
-    <!-- Analytics (exemplo) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'GA_MEASUREMENT_ID');
+
+        // Newsletter Form
+        document.querySelector('.newsletter-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            // Aqui você pode adicionar a lógica para enviar o email para seu backend
+            alert('Obrigado por se inscrever! Em breve você receberá nossas novidades.');
+            this.reset();
+        });
+
+        // Hover Effects
+        document.querySelectorAll('.hover-effect').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+                this.style.transition = 'all 0.3s ease';
+            });
+            
+            element.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
     </script>
 </body>
 </html> 

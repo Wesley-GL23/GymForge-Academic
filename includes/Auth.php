@@ -1,4 +1,27 @@
 <?php
+session_start();
+
+function verificarLogin() {
+    if (!isset($_SESSION['usuario_id'])) {
+        header('Location: login.php');
+        exit();
+    }
+}
+
+function verificarAdmin() {
+    if (!isset($_SESSION['nivel']) || $_SESSION['nivel'] !== 'administrador') {
+        header('Location: acesso_negado.php');
+        exit();
+    }
+}
+
+function verificarCliente() {
+    if (!isset($_SESSION['nivel']) || $_SESSION['nivel'] !== 'cliente') {
+        header('Location: acesso_negado.php');
+        exit();
+    }
+}
+
 class Auth {
     private $conn;
     
