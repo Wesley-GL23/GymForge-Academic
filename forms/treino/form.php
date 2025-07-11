@@ -25,7 +25,8 @@ if (isset($_GET['id'])) {
 }
 
 // Lista todos os exercícios disponíveis
-$exercicios = listar_exercicios();
+$exercicio = buscarExercicioPorId($id); 
+;
 
 // Gera token CSRF
 $csrf_token = gerar_csrf_token();

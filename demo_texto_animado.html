@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo - Texto Animado Melhorado - GymForge</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="assets/css/gymforge.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1A1A1A 0%, #232526 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .demo-container {
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+        }
+        
+        .demo-title {
+            color: #FFD700;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+        
+        .demo-subtitle {
+            color: #FF6B00;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .demo-text {
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .controls {
+            background: rgba(26, 26, 26, 0.6);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .control-group {
+            margin-bottom: 1rem;
+        }
+        
+        .control-label {
+            color: #FFD700;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .btn-demo {
+            background: linear-gradient(45deg, #FF6B00, #FFB649);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+        
+        .btn-demo:hover {
+            background: linear-gradient(45deg, #FFB649, #FF6B00);
+            transform: translateY(-2px);
+            color: white;
+        }
+        
+        .feature-list {
+            text-align: left;
+            color: white;
+            margin-top: 2rem;
+        }
+        
+        .feature-item {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-icon {
+            color: #FF6B00;
+            margin-right: 0.5rem;
+            width: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1 class="demo-title">Texto Animado Melhorado</h1>
+        <p class="demo-subtitle">Demonstração das melhorias implementadas</p>
+        
+        <div class="demo-text">
+            <p class="lead hero-dynamic-text" data-typed-items="Transforme seu corpo e mente,Supere seus limites diários,Alcance seus objetivos fitness,Seja mais forte a cada treino,Desenvolva sua disciplina,Conquiste sua melhor versão">
+                Transforme seu corpo e mente com o GymForge. Nossa plataforma combina treinos personalizados, acompanhamento profissional e gamificação para tornar sua jornada fitness mais eficiente e divertida.
+            </p>
+        </div>
+        
+        <div class="controls">
+            <h4 style="color: #FFD700; margin-bottom: 1rem;">Controles de Demonstração</h4>
+            
+            <div class="control-group">
+                <label class="control-label">Velocidade de Digitação:</label>
+                <button class="btn btn-demo btn-sm" onclick="changeSpeed(40)">Lenta</button>
+                <button class="btn btn-demo btn-sm" onclick="changeSpeed(80)">Normal</button>
+                <button class="btn btn-demo btn-sm" onclick="changeSpeed(120)">Rápida</button>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label">Tempo de Pausa:</label>
+                <button class="btn btn-demo btn-sm" onclick="changeDelay(2000)">Curto</button>
+                <button class="btn btn-demo btn-sm" onclick="changeDelay(4000)">Normal</button>
+                <button class="btn btn-demo btn-sm" onclick="changeDelay(6000)">Longo</button>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label">Efeitos:</label>
+                <button class="btn btn-demo btn-sm" onclick="toggleGlow()">Alternar Glow</button>
+                <button class="btn btn-demo btn-sm" onclick="togglePulse()">Alternar Pulse</button>
+                <button class="btn btn-demo btn-sm" onclick="restartTyped()">Reiniciar</button>
+            </div>
+        </div>
+        
+        <div class="feature-list">
+            <h4 style="color: #FFD700; margin-bottom: 1rem;">Melhorias Implementadas:</h4>
+            <div class="feature-item">
+                <i class="fas fa-check feature-icon"></i>
+                <span>Velocidade de digitação mais suave (80ms)</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-check feature-icon"></i>
+                <span>Tempo de pausa aumentado (4 segundos)</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-check feature-icon"></i>
+                <span>Altura mínima fixa para evitar tremores</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-check feature-icon"></i>
+                <span>Efeito de glow no cursor e texto</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-check feature-icon"></i>
+                <span>Animação de pulse sutil</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-check feature-icon"></i>
+                <span>Efeito de fade entre frases</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-check feature-icon"></i>
+                <span>Responsividade melhorada</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-check feature-icon"></i>
+                <span>Cursor personalizado com cor laranja</span>
+            </div>
+        </div>
+        
+        <div style="margin-top: 2rem;">
+            <a href="index.php" class="btn btn-demo">
+                <i class="fas fa-arrow-left me-2"></i>Voltar para a Página Inicial
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    
+    <script>
+        let typed;
+        let glowEnabled = true;
+        let pulseEnabled = true;
+        
+        // Inicializar Typed.js
+        function initTyped() {
+            const typedElement = document.querySelector('.hero-dynamic-text');
+            
+            if (typed) {
+                typed.destroy();
+            }
+            
+            typedElement.classList.add('typing-animation');
+            
+            typed = new Typed('.hero-dynamic-text', {
+                strings: typedElement.getAttribute('data-typed-items').split(','),
+                typeSpeed: 80,
+                backSpeed: 40,
+                backDelay: 4000,
+                loop: true,
+                showCursor: true,
+                cursorChar: '|',
+                fadeOut: true,
+                fadeOutClass: 'typed-fade-out',
+                fadeOutDelay: 500,
+                autoInsertCss: true,
+                smartBackspace: true,
+                shuffle: false,
+                onBegin: (self) => {
+                    if (glowEnabled) {
+                        typedElement.style.textShadow = '0 0 10px rgba(255, 107, 0, 0.5)';
+                    }
+                },
+                onComplete: (self) => {
+                    if (glowEnabled) {
+                        typedElement.style.textShadow = '0 0 20px rgba(255, 107, 0, 0.8)';
+                        typedElement.classList.add('typing-complete');
+                        setTimeout(() => {
+                            typedElement.style.textShadow = '0 0 10px rgba(255, 107, 0, 0.5)';
+                            typedElement.classList.remove('typing-complete');
+                        }, 2000);
+                    }
+                },
+                onStringTyped: (arrayPos) => {
+                    if (pulseEnabled) {
+                        typedElement.style.animation = 'textPulse 0.3s ease-in-out';
+                        setTimeout(() => {
+                            typedElement.style.animation = '';
+                        }, 300);
+                    }
+                }
+            });
+        }
+        
+        // Funções de controle
+        function changeSpeed(speed) {
+            if (typed) {
+                typed.typeSpeed = speed;
+                typed.backSpeed = speed / 2;
+            }
+        }
+        
+        function changeDelay(delay) {
+            if (typed) {
+                typed.backDelay = delay;
+            }
+        }
+        
+        function toggleGlow() {
+            glowEnabled = !glowEnabled;
+            const typedElement = document.querySelector('.hero-dynamic-text');
+            if (!glowEnabled) {
+                typedElement.style.textShadow = 'none';
+            }
+        }
+        
+        function togglePulse() {
+            pulseEnabled = !pulseEnabled;
+        }
+        
+        function restartTyped() {
+            initTyped();
+        }
+        
+        // Inicializar quando a página carregar
+        document.addEventListener('DOMContentLoaded', initTyped);
+    </script>
+</body>
+</html> 

@@ -5,19 +5,31 @@ require_once __DIR__ . '/../../includes/exercise_functions.php';
 
 // Verifica se o usuário está logado
 if (!estaLogado()) {
-    header('Location: /forms/usuario/login.php');
+    header('Location: /GymForge-Academic/login.php');
     exit;
 }
 
-// Busca informações do usuário
-$usuario_id = $_SESSION['usuario_id'];
-$nivel = $_SESSION['nivel'];
+// Busca informações do usuário - Corrigido para usar as variáveis corretas
+$usuario_id = $_SESSION['user_id']; // Corrigido de 'usuario_id' para 'user_id'
+$user_level = $_SESSION['user_level']; // Corrigido de 'nivel' para 'user_level'
 
 // Busca treinos ativos
-$treinos_ativos = listar_treinos($usuario_id, 'ativo', 3);
+$treinos_ativos = [];
+try {
+    $treinos_ativos = listar_treinos($usuario_id, 'ativo', 3);
+} catch (Exception $e) {
+    error_log("Erro ao buscar treinos ativos: " . $e->getMessage());
+    $treinos_ativos = [];
+}
 
 // Busca últimos exercícios adicionados
-listar_exercicios();
+$ultimos_exercicios = [];
+try {
+    $ultimos_exercicios = buscarExercicios(); // Corrigido para usar a função existente
+} catch (Exception $e) {
+    error_log("Erro ao buscar exercícios: " . $e->getMessage());
+    $ultimos_exercicios = [];
+}
 
 $titulo = "Dashboard";
 require_once __DIR__ . '/../../includes/header.php';
@@ -28,7 +40,7 @@ require_once __DIR__ . '/../../includes/header.php';
     <nav class="dashboard-sidebar">
         <div class="sidebar-header">
             <a href="/GymForge-Academic/" class="sidebar-home-link">
-                <img src="/assets/img/logo_small.png" alt="GymForge" class="sidebar-logo" style="width:40px;height:40px;object-fit:contain;">
+                <img src="/GymForge-Academic/assets/img/logo_small.png" alt="GymForge" class="sidebar-logo" style="width:40px;height:40px;object-fit:contain;">
             </a>
             <h3>GymForge</h3>
         </div>
@@ -50,7 +62,7 @@ require_once __DIR__ . '/../../includes/header.php';
             <li>
                 <a href="/GymForge-Academic/views/forge/guilds.php"><i class="fas fa-users"></i> Guildas</a>
             </li>
-            <?php if ($nivel === 'admin'): ?>
+            <?php if ($user_level === 'admin'): ?>
             <li class="nav-header">Administração</li>
             <li>
                 <a href="/GymForge-Academic/views/admin/exercicios.php"><i class="fas fa-cog"></i> Gerenciar Exercícios</a>
@@ -113,25 +125,29 @@ require_once __DIR__ . '/../../includes/header.php';
                     <a href="/GymForge-Academic/views/exercicios/biblioteca.php" class="btn btn-sm btn-outline-primary">Ver Biblioteca</a>
                 </div>
                 <div class="card-body">
-                    <div class="row row-cols-1 row-cols-md-2 g-4">
-                        <?php foreach ($ultimos_exercicios as $exercicio): ?>
-                            <div class="col">
-                                <div class="card h-100">
-                                    <?php if (!empty($exercicio['gif_url'])): ?>
-                                        <img src="<?php echo htmlspecialchars($exercicio['gif_url']); ?>" 
-                                             class="card-img-top" alt="<?php echo htmlspecialchars($exercicio['nome']); ?>">
-                                    <?php endif; ?>
-                                    <div class="card-body">
-                                        <h5 class="card-title"><?php echo htmlspecialchars($exercicio['nome']); ?></h5>
-                                        <p class="card-text">
-                                            <span class="badge bg-primary"><?php echo ucfirst($exercicio['categoria']); ?></span>
-                                            <span class="badge bg-secondary"><?php echo ucfirst($exercicio['grupo_muscular']); ?></span>
-                                        </p>
+                    <?php if (empty($ultimos_exercicios)): ?>
+                        <p class="text-muted">Nenhum exercício encontrado.</p>
+                    <?php else: ?>
+                        <div class="row row-cols-1 row-cols-md-2 g-4">
+                            <?php foreach ($ultimos_exercicios as $exercicio): ?>
+                                <div class="col">
+                                    <div class="card h-100">
+                                        <?php if (!empty($exercicio['gif_url'])): ?>
+                                            <img src="<?php echo htmlspecialchars($exercicio['gif_url']); ?>" 
+                                                 class="card-img-top" alt="<?php echo htmlspecialchars($exercicio['nome']); ?>">
+                                        <?php endif; ?>
+                                        <div class="card-body">
+                                            <h5 class="card-title"><?php echo htmlspecialchars($exercicio['nome']); ?></h5>
+                                            <p class="card-text">
+                                                <span class="badge bg-primary"><?php echo ucfirst($exercicio['categoria']); ?></span>
+                                                <span class="badge bg-secondary"><?php echo ucfirst($exercicio['grupo_muscular']); ?></span>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
 

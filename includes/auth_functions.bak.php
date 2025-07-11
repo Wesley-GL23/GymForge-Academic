@@ -311,7 +311,7 @@ function cadastrarUsuario($nome, $email, $senha) {
         // Verifica se email já existe
         $stmt = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
         $stmt->execute([$email]);
-        if ($stmt->fetch(PDO::FETCH_ASSOC)) {
+        if ($stmt->fetch()) {
             return false;
         }
 

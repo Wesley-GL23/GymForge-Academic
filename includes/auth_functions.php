@@ -7,19 +7,19 @@ if (!isset($conn) || !$conn) {
 }
 require_once __DIR__ . '/Auth.php';
 
-// Iniciar sessão se ainda não estiver ativa
-if (session_status() === PHP_SESSION_NONE) {
-    // Configurar cookies seguros antes de iniciar a sessão
-    session_set_cookie_params([
-        'lifetime' => 0,
-        'path' => '/',
-        'domain' => '',
-        'secure' => true,
-        'httponly' => true,
-        'samesite' => 'Strict'
-    ]);
-    session_start();
-}
+// Sessão já foi iniciada no config.php, não precisa iniciar novamente
+// if (session_status() === PHP_SESSION_NONE) {
+//     // Configurar cookies seguros antes de iniciar a sessão
+//     session_set_cookie_params([
+//         'lifetime' => 0,
+//         'path' => '/',
+//         'domain' => '',
+//         'secure' => true,
+//         'httponly' => true,
+//         'samesite' => 'Strict'
+//     ]);
+//     session_start();
+// }
 
 // Instanciar classe Auth
 $auth = new Auth($conn);
@@ -47,7 +47,7 @@ function fazerLogout() {
     global $auth;
     limparTokenLembrar(); // Limpar token de lembrar
     $auth->logout();
-    header('Location: /GymForge-Academic/forms/usuario/login.php');
+    header('Location: /GymForge-Academic/login.php');
     exit;
 }
 
@@ -96,14 +96,14 @@ function redirectWithMessage($url, $tipo, $mensagem) {
 
 function requireAuth() {
     if (!estaLogado()) {
-        header('Location: /forms/usuario/login.php');
+        header('Location: /GymForge-Academic/login.php');
         exit;
     }
 }
 
 function requireAdmin() {
     if (!estaLogado() || $_SESSION['user_level'] !== 'admin') {
-        header('Location: /403.php');
+        header('Location: /GymForge-Academic/acesso_negado.php');
         exit;
     }
 }
@@ -135,9 +135,9 @@ function fazerLogin($email, $senha, $lembrar = false) {
                     'expires' => time() + (30 * 24 * 60 * 60), // 30 dias
                     'path' => '/',
                     'domain' => '',
-                    'secure' => true,
+                    'secure' => false, // false para desenvolvimento local
                     'httponly' => true,
-                    'samesite' => 'Strict'
+                    'samesite' => 'Lax' // Lax para desenvolvimento
                 ]
             );
         } catch (Exception $e) {
@@ -175,7 +175,7 @@ function verificarTokenLembrar() {
         $resultado = $stmt->fetch();
         
         if ($resultado) {
-            // Login automático
+            // Login automático com variáveis consistentes
             $_SESSION['user_id'] = $resultado['id'];
             $_SESSION['user_name'] = $resultado['nome'];
             $_SESSION['user_email'] = $resultado['email'];
@@ -200,9 +200,9 @@ function verificarTokenLembrar() {
                     'expires' => time() + (30 * 24 * 60 * 60),
                     'path' => '/',
                     'domain' => '',
-                    'secure' => true,
+                    'secure' => false, // false para desenvolvimento local
                     'httponly' => true,
-                    'samesite' => 'Strict'
+                    'samesite' => 'Lax' // Lax para desenvolvimento
                 ]
             );
         } else {

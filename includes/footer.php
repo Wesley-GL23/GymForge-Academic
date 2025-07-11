@@ -161,16 +161,55 @@
         const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
         const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 
-        // Inicializar Typed.js
+        // Inicializar Typed.js melhorado com efeito metálico
         if (document.querySelector('.hero-dynamic-text')) {
+            const typedElement = document.querySelector('.hero-dynamic-text');
+            
+            // Adicionar classe para animação de entrada
+            typedElement.classList.add('typing-animation');
+            
             const typed = new Typed('.hero-dynamic-text', {
-                strings: document.querySelector('.hero-dynamic-text').getAttribute('data-typed-items').split(','),
-                typeSpeed: 100,
-                backSpeed: 50,
-                backDelay: 2000,
+                strings: typedElement.getAttribute('data-typed-items').split(','),
+                typeSpeed: 80, // Velocidade mais lenta e suave
+                backSpeed: 40, // Velocidade de apagar mais lenta
+                backDelay: 4000, // Mais tempo para ler cada frase
                 loop: true,
                 showCursor: true,
-                cursorChar: '|'
+                cursorChar: '|',
+                fadeOut: true, // Efeito de fade
+                fadeOutClass: 'typed-fade-out',
+                fadeOutDelay: 500,
+                autoInsertCss: true,
+                smartBackspace: true, // Só apaga o que não coincide
+                shuffle: false, // Manter ordem
+                onBegin: (self) => {
+                    // Efeito metálico no início
+                    typedElement.classList.add('typing-active');
+                    typedElement.style.textShadow = '0 0 15px rgba(255, 107, 0, 0.8), 0 0 30px rgba(255, 140, 0, 0.5)';
+                },
+                onComplete: (self) => {
+                    // Efeito de destaque metálico quando completa
+                    typedElement.classList.remove('typing-active');
+                    typedElement.classList.add('typing-complete');
+                    typedElement.style.textShadow = '0 0 25px rgba(255, 107, 0, 0.9), 0 0 50px rgba(255, 140, 0, 0.7), 0 0 75px rgba(255, 165, 0, 0.5)';
+                    
+                    setTimeout(() => {
+                        typedElement.classList.remove('typing-complete');
+                        typedElement.style.textShadow = '0 0 10px rgba(255, 107, 0, 0.5), 0 0 20px rgba(255, 140, 0, 0.3)';
+                    }, 2000);
+                },
+                onStringTyped: (arrayPos) => {
+                    // Efeito de forja metálico
+                    typedElement.style.animation = 'forgeGlow 0.5s ease-in-out, textPulse 0.3s ease-in-out';
+                    setTimeout(() => {
+                        typedElement.style.animation = '';
+                    }, 500);
+                },
+                onReset: (self) => {
+                    // Reset dos efeitos
+                    typedElement.classList.remove('typing-active', 'typing-complete');
+                    typedElement.style.textShadow = '0 0 10px rgba(255, 107, 0, 0.5), 0 0 20px rgba(255, 140, 0, 0.3)';
+                }
             });
         }
 

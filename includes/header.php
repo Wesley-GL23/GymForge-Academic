@@ -1,7 +1,12 @@
 <?php
-// Ativar exibição de erros para debug
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// Ativar exibição de erros para debug apenas em desenvolvimento
+if (defined('DEBUG_MODE') && DEBUG_MODE) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+} else {
+    error_reporting(0);
+    ini_set('display_errors', 0);
+}
 
 // Configurações e constantes
 if (!defined('BASE_URL')) {
@@ -11,8 +16,8 @@ if (!defined('BASE_URL')) {
 // Funções de autenticação
 require_once __DIR__ . '/auth_functions.php';
 
-// Iniciar ou recuperar sessão
-session_start();
+// Sessão já foi iniciada no config.php, não precisa iniciar novamente
+// session_start(); // REMOVIDO - já iniciado no config.php
 
 // Informações do usuário logado
 $usuario_atual = usuarioAtual();
@@ -24,23 +29,23 @@ if (!isset($titulo)) {
     $titulo = 'GymForge';
 }
 
-// Forçar HTTPS
-if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
+// Forçar HTTPS apenas em produção
+if (!DEBUG_MODE && (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on')) {
     $redirect = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     header("Location: " . $redirect);
     exit;
 }
 
-// Debug - Mostrar diretório atual
-echo "<!-- Debug: Current Directory = " . __DIR__ . " -->";
+// Debug - Mostrar diretório atual apenas em debug
+if (DEBUG_MODE) {
+    echo "<!-- Debug: Current Directory = " . __DIR__ . " -->";
+    echo "<!-- Debug: BASE_URL = " . BASE_URL . " -->";
+}
 
 // Verificar se BASE_URL está definida
 if (!defined('BASE_URL')) {
     die('Erro: BASE_URL não está definida. Verifique se o arquivo config.php foi carregado.');
 }
-
-// Debug - mostrar valor da BASE_URL
-echo "<!-- Debug: BASE_URL = " . BASE_URL . " -->";
 
 // Incluir funções de mensagem se ainda não foram incluídas
 if (!function_exists('setMessage')) {
@@ -127,7 +132,7 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                             <i class="fas fa-running me-2"></i>Meus Treinos
                         </a>
                     </li>
-                    <?php if (estaLogado() && isset($_SESSION['admin']) && $_SESSION['admin']): ?>
+                    <?php if (estaLogado() && isset($_SESSION['user_level']) && $_SESSION['user_level'] === 'admin'): ?>
                     <li class="nav-item" data-aos="fade-down" data-aos-delay="400">
                         <a class="nav-link <?php echo $current_page === 'admin' ? 'active' : ''; ?>" href="/GymForge-Academic/views/admin/">
                             <i class="fas fa-shield-alt me-2"></i>Admin
@@ -141,9 +146,9 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                     <div class="dropdown">
                         <button class="btn btn-link dropdown-toggle text-white" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user-circle fa-lg text-forge-accent me-2"></i>
-                            <span class="text-forge-accent"><?php echo $_SESSION['nome'] ?? 'Usuário'; ?></span>
-                            <?php if (isset($_SESSION['nivel'])): ?>
-                            <span class="badge bg-forge-accent text-dark ms-2">Nível <?php echo $_SESSION['nivel']; ?></span>
+                            <span class="text-forge-accent"><?php echo $_SESSION['user_name'] ?? 'Usuário'; ?></span>
+                            <?php if (isset($_SESSION['user_level'])): ?>
+                            <span class="badge bg-forge-accent text-dark ms-2"><?php echo ucfirst($_SESSION['user_level']); ?></span>
                             <?php endif; ?>
                         </button>
                         <ul class="dropdown-menu glass-effect-light dropdown-menu-end">

@@ -7,38 +7,57 @@ $erro = '';
 $sucesso = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING);
-    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+    // Validação e sanitização dos dados
+    $nome = trim(filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING));
+    $email = trim(filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL));
     $senha = $_POST['senha'] ?? '';
     $confirmar_senha = $_POST['confirmar_senha'] ?? '';
 
-    // Validações server-side
-    if (empty($nome)) {
-        $erro = 'Nome é obrigatório';
+    // Validações server-side mais rigorosas
+    if (empty($nome) || strlen($nome) < 2) {
+        $erro = 'Nome deve ter pelo menos 2 caracteres';
+    } elseif (strlen($nome) > 100) {
+        $erro = 'Nome muito longo';
     } elseif (!$email) {
         $erro = 'Email inválido';
     } elseif (empty($senha)) {
         $erro = 'Senha é obrigatória';
+    } elseif (strlen($senha) < 6) {
+        $erro = 'Senha deve ter pelo menos 6 caracteres';
+    } elseif (strlen($senha) > 255) {
+        $erro = 'Senha muito longa';
     } elseif ($senha !== $confirmar_senha) {
         $erro = 'As senhas não conferem';
+    } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/', $senha)) {
+        $erro = 'Senha deve conter pelo menos uma letra maiúscula, uma minúscula e um número';
     } else {
         try {
+            // Verificar se email já existe
             $stmt = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
             $stmt->execute([$email]);
             if ($stmt->fetch()) {
                 $erro = 'Este email já está cadastrado';
             } else {
-                $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-                $stmt = $conn->prepare("INSERT INTO usuarios (nome, email, senha, nivel) VALUES (?, ?, ?, 'cliente')");
+                // Hash da senha com algoritmo mais seguro
+                $senha_hash = password_hash($senha, PASSWORD_ARGON2ID, [
+                    'memory_cost' => 65536,
+                    'time_cost' => 4,
+                    'threads' => 2
+                ]);
+                
+                $stmt = $conn->prepare("INSERT INTO usuarios (nome, email, senha, nivel, data_cadastro) VALUES (?, ?, ?, 'cliente', NOW())");
                 if ($stmt->execute([$nome, $email, $senha_hash])) {
                     $sucesso = 'Cadastro realizado com sucesso! Faça login para continuar.';
+                    
+                    // Log de segurança
+                    error_log("Novo usuário cadastrado: " . $email . " - IP: " . $_SERVER['REMOTE_ADDR']);
                 } else {
                     $erro = 'Erro ao cadastrar usuário';
                 }
             }
         } catch (PDOException $e) {
             $erro = 'Erro ao cadastrar usuário';
-            error_log($e->getMessage());
+            error_log("Erro no cadastro: " . $e->getMessage());
         }
     }
 }
@@ -72,6 +91,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             position: relative;
             z-index: 1;
         }
+        .password-strength {
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        .strength-weak { color: #dc3545; }
+        .strength-medium { color: #ffc107; }
+        .strength-strong { color: #28a745; }
     </style>
 </head>
 <body class="bg-cadastro">
@@ -106,8 +132,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <span class="input-group-text bg-transparent border-0 text-forge-accent">
                                     <i class="fas fa-user"></i>
                                 </span>
-                                <input type="text" class="form-control bg-transparent border-0 border-bottom" 
-                                    id="nome" name="nome" placeholder="Seu nome completo" required>
+                                <input type="text" class="form-control bg-transparent border-0 border-bottom text-white" 
+                                    id="nome" name="nome" placeholder="Seu nome completo" required 
+                                    minlength="2" maxlength="100"
+                                    value="<?php echo isset($_POST['nome']) ? htmlspecialchars($_POST['nome']) : ''; ?>">
                             </div>
                         </div>
                         <div class="mb-4">
@@ -115,8 +143,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <span class="input-group-text bg-transparent border-0 text-forge-accent">
                                     <i class="fas fa-envelope"></i>
                                 </span>
-                                <input type="email" class="form-control bg-transparent border-0 border-bottom" 
-                                    id="email" name="email" placeholder="Seu melhor email" required>
+                                <input type="email" class="form-control bg-transparent border-0 border-bottom text-white" 
+                                    id="email" name="email" placeholder="Seu melhor email" required
+                                    value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
                             </div>
                         </div>
                         <div class="mb-4">
@@ -124,11 +153,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <span class="input-group-text bg-transparent border-0 text-forge-accent">
                                     <i class="fas fa-lock"></i>
                                 </span>
-                                <input type="password" class="form-control bg-transparent border-0 border-bottom" 
-                                    id="senha" name="senha" placeholder="Crie uma senha forte" required minlength="6">
+                                <input type="password" class="form-control bg-transparent border-0 border-bottom text-white" 
+                                    id="senha" name="senha" placeholder="Crie uma senha forte" required minlength="6" maxlength="255">
                             </div>
+                            <div class="password-strength" id="passwordStrength"></div>
                             <small class="text-forge-accent">
-                                <i class="fas fa-info-circle me-1"></i> Mínimo de 6 caracteres
+                                <i class="fas fa-info-circle me-1"></i> Mínimo de 6 caracteres com letra maiúscula, minúscula e número
                             </small>
                         </div>
                         <div class="mb-4">
@@ -136,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <span class="input-group-text bg-transparent border-0 text-forge-accent">
                                     <i class="fas fa-shield-alt"></i>
                                 </span>
-                                <input type="password" class="form-control bg-transparent border-0 border-bottom" 
+                                <input type="password" class="form-control bg-transparent border-0 border-bottom text-white" 
                                     id="confirmar_senha" name="confirmar_senha" placeholder="Confirme sua senha" required>
                             </div>
                         </div>
@@ -184,6 +214,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }, false)
         })
     })()
+
+    // Verificação de força da senha
+    document.getElementById('senha').addEventListener('input', function() {
+        const password = this.value;
+        const strengthDiv = document.getElementById('passwordStrength');
+        
+        let strength = 0;
+        let feedback = '';
+        
+        if (password.length >= 6) strength++;
+        if (password.match(/[a-z]/)) strength++;
+        if (password.match(/[A-Z]/)) strength++;
+        if (password.match(/[0-9]/)) strength++;
+        if (password.match(/[^a-zA-Z0-9]/)) strength++;
+        
+        switch(strength) {
+            case 0:
+            case 1:
+                feedback = '<span class="strength-weak"><i class="fas fa-times-circle"></i> Senha fraca</span>';
+                break;
+            case 2:
+            case 3:
+                feedback = '<span class="strength-medium"><i class="fas fa-exclamation-triangle"></i> Senha média</span>';
+                break;
+            case 4:
+            case 5:
+                feedback = '<span class="strength-strong"><i class="fas fa-check-circle"></i> Senha forte</span>';
+                break;
+        }
+        
+        strengthDiv.innerHTML = feedback;
+    });
     </script>
 </body>
 </html> 

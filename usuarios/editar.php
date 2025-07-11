@@ -13,13 +13,21 @@ if (!isset($_SESSION['user_id']) || !$id || $_SESSION['user_id'] != $id) {
 $erro = '';
 $sucesso = '';
 
-// Buscar dados do usuário
-$profile_img_path = "../assets/img/profiles/$id.jpg";
-$has_profile_img = file_exists($profile_img_path);
+// Buscar imagem de perfil com qualquer extensão suportada
+$profile_img_path = null;
+$exts = ['jpg', 'jpeg', 'png', 'gif'];
+foreach ($exts as $ext) {
+    $try_path = "../assets/img/profiles/$id.$ext";
+    if (file_exists($try_path)) {
+        $profile_img_path = $try_path;
+        break;
+    }
+}
+$has_profile_img = $profile_img_path !== null;
 $default_avatar = '../assets/img/avatar-default.png';
 
 try {
-    $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE id = ?");
+    $stmt = $conn->prepare("SELECT * FROM usuarios WHERE id = ?");
     $stmt->execute([$id]);
     $usuario = $stmt->fetch();
     
@@ -51,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         try {
             // Verificar se email já existe (exceto para o próprio usuário)
-            $stmt = $pdo->prepare("SELECT id FROM usuarios WHERE email = ? AND id != ?");
+            $stmt = $conn->prepare("SELECT id FROM usuarios WHERE email = ? AND id != ?");
             $stmt->execute([$email, $id]);
             if ($stmt->fetch()) {
                 $erro = 'Este email já está cadastrado para outro usuário';
@@ -60,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (!empty($senha)) {
                     // Se a senha foi fornecida, atualiza com a nova senha
                     $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-                    $stmt = $pdo->prepare("
+                    $stmt = $conn->prepare("
                         UPDATE usuarios 
                         SET nome = ?, email = ?, senha = ?, nivel = ? 
                         WHERE id = ?
@@ -68,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $params = [$nome, $email, $senha_hash, $nivel, $id];
                 } else {
                     // Se a senha não foi fornecida, mantém a senha atual
-                    $stmt = $pdo->prepare("
+                    $stmt = $conn->prepare("
                         UPDATE usuarios 
                         SET nome = ?, email = ?, nivel = ? 
                         WHERE id = ?
@@ -77,9 +85,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 
                 if ($stmt->execute($params)) {
-                    $_SESSION['mensagem'] = 'Usuário atualizado com sucesso!';
-                    header('Location: index.php');
-                    exit();
+                    $sucesso = 'Usuário atualizado com sucesso!';
+                    // Atualizar dados do usuário para exibir na tela
+                    $stmt = $conn->prepare("SELECT * FROM usuarios WHERE id = ?");
+                    $stmt->execute([$id]);
+                    $usuario = $stmt->fetch();
                 } else {
                     $erro = 'Erro ao atualizar usuário';
                 }
@@ -95,39 +105,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $ext = strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION));
         $allowed = ['jpg', 'jpeg', 'png', 'gif'];
         if (in_array($ext, $allowed)) {
-            move_uploaded_file($tmp_name, "../assets/img/profiles/$id.jpg");
+            // Remover imagens antigas do usuário
+            foreach ($allowed as $old_ext) {
+                $old_path = "../assets/img/profiles/$id.$old_ext";
+                if (file_exists($old_path)) {
+                    unlink($old_path);
+                }
+            }
+            $dest_path = "../assets/img/profiles/$id.$ext";
+            move_uploaded_file($tmp_name, $dest_path);
+            $has_profile_img = true;
+            $profile_img_path = $dest_path . '?v=' . time();
         }
     }
 }
-?>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Usuário - GymForge</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-    <div class="container mt-4">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h2 class="card-title mb-4">Editar Usuário</h2>
-                        
-                        <?php if ($erro): ?>
-                            <div class="alert alert-danger"><?php echo htmlspecialchars($erro); ?></div>
-                        <?php endif; ?>
 
-                        <form method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
-                            <div class="mb-3 text-center">
-                                <img src="<?php echo $has_profile_img ? $profile_img_path : $default_avatar; ?>" alt="Foto de Perfil" class="rounded-circle mb-2" style="width: 120px; height: 120px; object-fit: cover; border: 2px solid #FF6B00;">
-                                <div>
-                                    <label for="foto" class="form-label">Foto de Perfil</label>
-                                    <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
-                                </div>
+$titulo = 'Editar Usuário';
+include '../includes/header.php';
+?>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Editar Usuário</h2>
+                    <?php if ($erro): ?>
+                        <div class="alert alert-danger"><?php echo htmlspecialchars($erro); ?></div>
+                    <?php endif; ?>
+                    <?php if ($sucesso): ?>
+                        <div class="alert alert-success"><?php echo htmlspecialchars($sucesso); ?></div>
+                    <?php endif; ?>
+                    <form method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+                        <div class="mb-3 text-center">
+                            <img src="<?php echo $has_profile_img ? $profile_img_path : $default_avatar; ?>" alt="Foto de Perfil" class="rounded-circle mb-2" style="width: 120px; height: 120px; object-fit: cover; border: 2px solid #FF6B00;">
+                            <div>
+                                <label for="foto" class="form-label">Foto de Perfil</label>
+                                <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
                             </div>
+                        </div>
 
                             <div class="mb-3">
                                 <label for="nome" class="form-label">Nome *</label>
@@ -186,34 +201,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-    (function () {
-        'use strict'
-        var forms = document.querySelectorAll('.needs-validation')
-        Array.prototype.slice.call(forms).forEach(function (form) {
-            form.addEventListener('submit', function (event) {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
-                
-                // Validação adicional de senha
-                var senha = document.getElementById('senha')
-                var confirmar_senha = document.getElementById('confirmar_senha')
-                if (senha.value && senha.value !== confirmar_senha.value) {
-                    confirmar_senha.setCustomValidity('As senhas não conferem')
-                    event.preventDefault()
-                    event.stopPropagation()
-                } else {
-                    confirmar_senha.setCustomValidity('')
-                }
-                
-                form.classList.add('was-validated')
-            }, false)
-        })
-    })()
-    </script>
-</body>
-</html> 
+</div>
+<?php include '../includes/footer.php'; ?> 

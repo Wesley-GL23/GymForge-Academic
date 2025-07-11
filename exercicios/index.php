@@ -7,7 +7,7 @@ verificarLogin();
 
 // Buscar exercícios do banco de dados
 try {
-    $stmt = $pdo->query("SELECT * FROM exercicios ORDER BY nome");
+    $stmt = $conn->query("SELECT * FROM exercicios ORDER BY nome");
     $exercicios = $stmt->fetchAll();
 } catch (PDOException $e) {
     $erro = 'Erro ao buscar exercícios: ' . $e->getMessage();
@@ -30,7 +30,7 @@ unset($_SESSION['mensagem']);
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Gerenciar Exercícios</h2>
-            <?php if ($_SESSION['nivel'] === 'administrador'): ?>
+            <?php if (isset($_SESSION['user_level']) && $_SESSION['user_level'] === 'admin'): ?>
             <a href="criar.php" class="btn btn-primary">
                 <i class="bi bi-plus-lg"></i> Novo Exercício
             </a>
@@ -73,7 +73,7 @@ unset($_SESSION['mensagem']);
                                class="btn btn-outline-primary">
                                 <i class="bi bi-eye"></i> Ver
                             </a>
-                            <?php if ($_SESSION['nivel'] === 'administrador'): ?>
+                            <?php if (isset($_SESSION['user_level']) && $_SESSION['user_level'] === 'admin'): ?>
                             <a href="editar.php?id=<?php echo $exercicio['id']; ?>" 
                                class="btn btn-outline-secondary">
                                 <i class="bi bi-pencil"></i> Editar
@@ -91,7 +91,7 @@ unset($_SESSION['mensagem']);
             </div>
 
             <!-- Modal de Confirmação de Exclusão -->
-            <?php if ($_SESSION['nivel'] === 'administrador'): ?>
+            <?php if (isset($_SESSION['user_level']) && $_SESSION['user_level'] === 'admin'): ?>
             <div class="modal fade" id="deleteModal<?php echo $exercicio['id']; ?>" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">

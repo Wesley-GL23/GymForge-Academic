@@ -15,7 +15,7 @@ $titulo = "GymForge - Seu treino. Sua força. Sua evolução.";
         <div class="container">
             <div class="glass-effect text-center" data-aos="fade-up">
                 <h1 class="display-4 fw-bold mb-4">FORJE SUA MELHOR VERSÃO</h1>
-                <p class="lead mb-4 hero-dynamic-text" data-typed-items="Transforme seu corpo,Supere seus limites,Alcance seus objetivos,Seja mais forte">Transforme seu corpo e mente com o GymForge. Nossa plataforma combina treinos personalizados, acompanhamento profissional e gamificação para tornar sua jornada fitness mais eficiente e divertida.</p>
+                <p class="lead mb-4 hero-dynamic-text" data-typed-items="Transforme seu corpo e mente,Supere seus limites diários,Alcance seus objetivos fitness,Seja mais forte a cada treino,Desenvolva sua disciplina,Conquiste sua melhor versão">Transforme seu corpo e mente com o GymForge. Nossa plataforma combina treinos personalizados, acompanhamento profissional e gamificação para tornar sua jornada fitness mais eficiente e divertida.</p>
                 <div class="d-flex gap-3 justify-content-center">
                     <a href="/GymForge-Academic/cadastro.php" class="btn btn-primary btn-lg forge-glow" data-aos="fade-right" data-aos-delay="200">
                         <i class="fas fa-fire me-2"></i>Comece Agora

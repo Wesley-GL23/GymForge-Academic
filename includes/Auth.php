@@ -1,23 +1,24 @@
 <?php
-session_start();
+// Sessão já foi iniciada no config.php, não precisa iniciar novamente
+// session_start(); // REMOVIDO - já iniciado no config.php
 
 function verificarLogin() {
-    if (!isset($_SESSION['usuario_id'])) {
-        header('Location: login.php');
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: /GymForge-Academic/login.php');
         exit();
     }
 }
 
 function verificarAdmin() {
-    if (!isset($_SESSION['nivel']) || $_SESSION['nivel'] !== 'administrador') {
-        header('Location: acesso_negado.php');
+    if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] !== 'admin') {
+        header('Location: /GymForge-Academic/acesso_negado.php');
         exit();
     }
 }
 
 function verificarCliente() {
-    if (!isset($_SESSION['nivel']) || $_SESSION['nivel'] !== 'cliente') {
-        header('Location: acesso_negado.php');
+    if (!isset($_SESSION['user_level']) || $_SESSION['user_level'] !== 'cliente') {
+        header('Location: /GymForge-Academic/acesso_negado.php');
         exit();
     }
 }
@@ -78,7 +79,7 @@ class Auth {
                 ");
                 $stmt->execute([$usuario['id']]);
                 
-                // Criar sessão
+                // Criar sessão com variáveis consistentes
                 $_SESSION['user_id'] = $usuario['id'];
                 $_SESSION['user_name'] = $usuario['nome'];
                 $_SESSION['user_email'] = $usuario['email'];
@@ -128,7 +129,15 @@ class Auth {
     }
     
     public function logout() {
-        session_destroy();
+        // Limpar todas as variáveis de sessão
+        $_SESSION = array();
+        
+        // Destruir a sessão
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_destroy();
+        }
+        
+        // Iniciar nova sessão para mensagem
         session_start();
         $_SESSION['mensagem'] = [
             'tipo' => 'success',
@@ -158,7 +167,7 @@ class Auth {
                 'tipo' => 'warning',
                 'texto' => 'Você precisa fazer login para acessar esta página.'
             ];
-            header('Location: ' . BASE_URL . '/forms/usuario/login.php');
+            header('Location: /GymForge-Academic/login.php');
             exit;
         }
     }
@@ -170,7 +179,7 @@ class Auth {
                 'tipo' => 'danger',
                 'texto' => 'Acesso negado. Você não tem permissão para acessar esta página.'
             ];
-            header('Location: ' . BASE_URL . '/403.php');
+            header('Location: /GymForge-Academic/acesso_negado.php');
             exit;
         }
     }
